@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#000000">
   <title>ThuysMao Profile</title>
-  <meta name="description" content="ThuysMao's profile: Medical maid, imperial harem member, passionate about medicine and mysteries. Connect on Discord, Steam, and more.">
-  <meta name="keywords" content="thuysmao, medical maid, imperial harem, profile, Discord, Steam, medicine, anime, Kusuriya, Faceit">
+  <meta name="description"
+    content="ThuysMao's profile: Medical maid, imperial harem member, passionate about medicine and mysteries. Connect on Discord, Steam, and more.">
+  <meta name="keywords"
+    content="thuysmao, medical maid, imperial harem, profile, Discord, Steam, medicine, anime, Kusuriya, Faceit">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://diy2kay4.me/"/>
+  <link rel="canonical" href="https://profolio.blog/" />
   <meta name="shimejiBrowserExtensionId" content="gohjpllcolmccldfdggmamodembldgpc" data-version="2.0.5">
 
   <!-- OG Tags -->
   <meta property="og:title" content="ThuysMao Profile - Medical Maid & Imperial Harem Enthusiast" />
-  <meta property="og:description" content="ThuysMao's profile: Medical maid, imperial harem member, passionate about medicine and mysteries." />
+  <meta property="og:description"
+    content="ThuysMao's profile: Medical maid, imperial harem member, passionate about medicine and mysteries." />
   <meta property="og:image" content="https://profolio.blog/assets/favico/icon.png" />
-  <meta property="og:url" content="https://diy2kay4.me" />
+  <meta property="og:url" content="https://profolio.blog/" />
   <meta property="og:type" content="website" />
 
   <meta name="dmca-site-verification" content="YOUR-CODE" />
@@ -25,7 +29,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="./assets/css/tilt-effect.css">
 
@@ -35,6 +39,7 @@
   <!-- Tilt -->
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
 </head>
+
 <body>
   <div id="particles-js"></div>
   <button id="skip-button">𝚜𝚔𝚒𝚙</button>
@@ -63,151 +68,122 @@
   <video id="myVideo" muted playsinline></video>
   <audio id="myAudio"></audio>
 
-    <!-- Dark Overlay -->
-    <div id="video-overlay"></div>
+  <!-- Dark Overlay -->
+  <div id="video-overlay"></div>
 
-    <!-- Clock -->
-    <div id="clock-date"></div>
+  <!-- Clock -->
+  <div id="clock-date"></div>
 
-    <!-- Blurred Box with Profile -->
-    <div id="blurred-box" class="tilt-element">
-      <!-- Avatar -->
-      <div class="profile-picture-container">
-        <img id="profile-picture" src="./assets/pfp/default.jpg" alt="ThuysMao Profile Picture">
-        <div id="discord-sync-indicator" class="sync-indicator"><i class="fab fa-discord"></i></div>
+  <!-- Blurred Box with Profile -->
+  <div id="blurred-box" class="tilt-element">
+    <!-- Avatar -->
+    <div class="profile-picture-container">
+      <img id="profile-picture" src="./assets/pfp/default.jpg" alt="ThuysMao Profile Picture">
+      <div id="discord-sync-indicator" class="sync-indicator"><i class="fab fa-discord"></i></div>
+    </div>
+    <img id="avatar-frame" src="" alt="Avatar Frame">
+
+    <!-- Username -->
+    <p id="username-container">
+      <span id="username">ThuysMao</span><span id="typing-cursor">|</span>
+      <span id="seo-username" aria-hidden="false" style="position: absolute; left: -9999px;"></span>
+    </p>
+
+    <!-- Badges -->
+    <div class="badges-container">
+      <img src="./assets/badge/nitro.png" alt="Discord Nitro Badge">
+      <img src="./assets/badge/f9f14cb0-9829-4556-a144-94b0aa0d508a.webp" alt="Special Badge">
+      <img src="./assets/badge/1837-evolving-badge-nitro-24-months.png" alt="24 Month Nitro Boost Badge">
+      <img src="./assets/badge/completed-a-quest.png" alt="Quest Completion Badge">
+      <img src="./assets/badge/discord.png" alt="Discord Early Supporter Badge">
+      <img src="./assets/badge/Discord_Partner_Server_Owner_Badge.png" alt="Discord Partnered Server Owner Badge">
+      <img src="./assets/badge/active-developer.png" alt="Discord Active Developer Badge">
+    </div>
+
+    <!-- Music Controls -->
+    <div class="music-controls">
+      <button id="randomBtn" class="music-btn"><i class="fas fa-random"></i></button>
+      <button id="playPauseBtn" class="music-btn"><i class="fas fa-pause"></i></button>
+      <button id="muteBtn" class="music-btn"><i class="fas fa-volume-up"></i></button>
+      <div class="volume-container">
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
       </div>
-      <img id="avatar-frame" src="" alt="Avatar Frame">
+    </div>
 
-      <!-- Username -->
-      <p id="username-container">
-        <span id="username">ThuysMao</span><span id="typing-cursor">|</span>
-        <span id="seo-username" aria-hidden="false" style="position: absolute; left: -9999px;"></span>
-      </p>
-
-      <!-- Badges -->
-      <div class="badges-container">
-        <img src="./assets/badge/nitro.png" alt="Discord Nitro Badge">
-        <img src="./assets/badge/f9f14cb0-9829-4556-a144-94b0aa0d508a.webp" alt="Special Badge">
-        <img src="./assets/badge/1837-evolving-badge-nitro-24-months.png" alt="24 Month Nitro Boost Badge">
-        <img src="./assets/badge/completed-a-quest.png" alt="Quest Completion Badge">
-        <img src="./assets/badge/discord.png" alt="Discord Early Supporter Badge">
-        <img src="./assets/badge/Discord_Partner_Server_Owner_Badge.png" alt="Discord Partnered Server Owner Badge">
-        <img src="./assets/badge/active-developer.png" alt="Discord Active Developer Badge">
-      </div>
-
-      <!-- Music Controls -->
-      <div class="music-controls">
-        <button id="randomBtn" class="music-btn"><i class="fas fa-random"></i></button>
-        <button id="playPauseBtn" class="music-btn"><i class="fas fa-pause"></i></button>
-        <button id="muteBtn" class="music-btn"><i class="fas fa-volume-up"></i></button>
-        <div class="volume-container">
-          <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
+    <!-- Discord Widget -->
+    <div class="discord-widget">
+      <div class="discord-content">
+        <div class="discord-icon">
+          <img id="discord-avatar" src="" alt="Discord User Avatar">
+        </div>
+        <div class="discord-meta">
+          <b id="discord-username"></b>
+          <div>
+            <span id="discord-status-dot"></span>
+            <span id="discord-status-text"></span>
+          </div>
         </div>
       </div>
 
-      <!-- Discord Widget -->
-      <div class="discord-widget">
-        <div class="discord-content">
-          <div class="discord-icon">
-            <img id="discord-avatar" src="" alt="Discord User Avatar">
-          </div>
-          <div class="discord-meta">
-            <b id="discord-username"></b>
-            <div>
-              <span id="discord-status-dot"></span>
-              <span id="discord-status-text"></span>
-            </div>
+      <div class="discord-activity">
+        <div id="discord-activity-info" class="hidden">
+          <div id="discord-album-art"></div>
+
+          <div class="discord-activity-content">
+            <span id="discord-activity-name"></span>
+            <span id="discord-activity-details"></span>
+            <span id="discord-activity-state"></span>
           </div>
         </div>
 
-        <div class="discord-activity">
-  <div id="discord-activity-info" class="hidden">
-    <div id="discord-album-art"></div>
-
-    <div class="discord-activity-content">
-      <span id="discord-activity-name"></span>
-      <span id="discord-activity-details"></span>
-      <span id="discord-activity-state"></span>
+        <div id="discord-no-activity">Đang không làm gì cả :D</div>
+      </div>
     </div>
   </div>
 
-  <div id="discord-no-activity">Đang không làm gì cả :D</div>
-</div>
-</div>
-</div>
-
-      <div id="system-panel" class="system-panel">
-        <button id="system-panel-toggle" class="system-panel-toggle" type="button">
-          <span class="toggle-icon">❯</span>
-        </button>
-      
-        <div class="system-panel-content">
-          <div id="loading-status" class="loading-status">
-            Initializing...
-          </div>
-      
-          <div class="theme-switcher">
-            <button class="theme-btn active" data-theme="cyber-neon">Cyber Neon</button>
-            <button class="theme-btn" data-theme="pink-anime">Pink Anime</button>
-            <button class="theme-btn" data-theme="dark-glass">Dark Glass</button>
-          </div>
-      
-          <div class="stats-block">
-            <div class="stat-item">
-              <span class="stat-label">Uptime</span>
-              <span id="stat-uptime" class="stat-value">0s</span>
-            </div>
-      
-            <div class="stat-item">
-              <span class="stat-label">Theme</span>
-              <span id="stat-theme" class="stat-value">cyber-neon</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
   <div id="page">
     <div id="scroll-container">
-    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-      <a href="" download>
-        chưa biết làm gì ở đây cả, nhưng có thể là một cái gì đó thú vị.
-        <img src="./assets/pfp/heart.png" alt="Heart Icon" height="20" style="vertical-align: middle; margin-left: 8px;" />
-      </a>
-      <a href="https://discord.com/users/985537688159522847" target="_blank"><i class="fab fa-discord"></i></a>
-      <a href="https://www.facebook.com/kn1zmonster/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-      <a href="https://www.faceit.com/en/players/DamCuoiChuot" target="_blank"><i class="fa-brands fa-steam"></i></a>
-      <a href="https://kusuriya.fandom.com/wiki/Maomao" target="_blank"><i class="fa fa-globe"></i></a>
-    </marquee>
+      <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+        <a href="" download>
+          chưa biết làm gì ở đây cả, nhưng có thể là một cái gì đó thú vị.
+          <img src="./assets/pfp/heart.png" alt="Heart Icon" height="20"
+            style="vertical-align: middle; margin-left: 8px;" />
+        </a>
+        <a href="https://discord.com/users/985537688159522847" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://www.facebook.com/kn1zmonster/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.faceit.com/en/players/DamCuoiChuot" target="_blank"><i class="fa-brands fa-steam"></i></a>
+        <a href="https://kusuriya.fandom.com/wiki/Maomao" target="_blank"><i class="fa fa-globe"></i></a>
+      </marquee>
     </div>
   </div>
 
   <!-- Faceit Info Box -->
   <div class="faceit">
-  <span>
-    <img src="./assets/pfp/faceit.png" alt="Faceit Rank Icon" class="faceit-icon">
-    <strong>2221</strong>
-  </span> |
-  <span><strong>1.17 KDR</strong></span> |
-  <span><strong>57 hs%</strong></span> |
-  <span>
-    <img src="./assets/pfp/flag.png" alt="Country Flag" class="faceit-flag">
-    <strong>#393</strong>
-  </span>
+    <span>
+      <img src="./assets/pfp/faceit.png" alt="Faceit Rank Icon" class="faceit-icon">
+      <strong>2221</strong>
+    </span> |
+    <span><strong>1.17 KDR</strong></span> |
+    <span><strong>57 hs%</strong></span> |
+    <span>
+      <img src="./assets/pfp/flag.png" alt="Country Flag" class="faceit-flag">
+      <strong>#393</strong>
+    </span>
   </div>
 
   <div class="valorant">
-  <span>
-    <img src="./assets/pfp/immo3.png" alt="Valorant Rank Icon" class="valorant-icon">
-    <strong>Ep2,7</strong>
-  </span> |
-  <span>
-    <img src="./assets/pfp/immo1.png" alt="Valorant Rank Icon" class="valorant-icon">
-    <strong>Ep4</strong>
-  </span> |
-  <span>
-    <img src="./assets/pfp/ascent2.png" alt="Valorant Rank Icon" class="valorant-icon">
-    <strong>Ep6,8</strong>
-  </span>
+    <span>
+      <img src="./assets/pfp/immo3.png" alt="Valorant Rank Icon" class="valorant-icon">
+      <strong>Ep2,7</strong>
+    </span> |
+    <span>
+      <img src="./assets/pfp/immo1.png" alt="Valorant Rank Icon" class="valorant-icon">
+      <strong>Ep4</strong>
+    </span> |
+    <span>
+      <img src="./assets/pfp/ascent2.png" alt="Valorant Rank Icon" class="valorant-icon">
+      <strong>Ep6,8</strong>
+    </span>
   </div>
 
   <!-- Toggle Buttons -->
@@ -218,8 +194,10 @@
   <div class="credit-line credit-visible">
     ©2025 ThuysMão. Built from the ground up. All rights reserved.
     |
-    <a href="https://www.dmca.com/Protection/Status.aspx?ID=7135a7d1-3571-47a8-a1e6-043b187408b0" title="DMCA.com Protection Status" class="dmca-badge"> 
-    <img src ="https://images.dmca.com/Badges/dmca-badge-w150-5x1-06.png?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"  alt="DMCA.com Protection Status"      style="height:16px; vertical-align:middle;" /></a>  
+    <a href="https://www.dmca.com/Protection/Status.aspx?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
+      title="DMCA.com Protection Status" class="dmca-badge">
+      <img src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-06.png?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
+        alt="DMCA.com Protection Status" style="height:16px; vertical-align:middle;" /></a>
     <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
   </div>
   <!-- Thêm dữ liệu có cấu trúc (schema.org) cơ bản -->
@@ -259,37 +237,6 @@
   <script src="./assets/js/terminal.js" defer></script>
   <script src="./assets/js/script.js" defer></script>
 
-  <!-- Terminal Toggle Button -->
-  <button id="terminal-toggle" class="terminal-toggle">>_</button>
-
-  <div id="terminal-overlay" class="terminal-overlay hidden">
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <div class="terminal-dots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="terminal-title">thuysmao@system:~</div>
-        <button id="terminal-close" class="terminal-close">✕</button>
-      </div>
-  
-      <div id="terminal-body" class="terminal-body">
-        <div class="terminal-line term-accent">THUYSMAO terminal initialized.</div>
-        <div class="terminal-line">Type <span class="term-accent">help</span> to see available commands.</div>
-      </div>
-  
-      <form id="terminal-form" class="terminal-input-row" autocomplete="off">
-        <span class="prompt">thuysmao@system:~$</span>
-        <input
-          id="terminal-input"
-          class="terminal-input"
-          type="text"
-          spellcheck="false"
-          autocomplete="off"
-        />
-      </form>
-    </div>
-  </div>
 </body>
+
 </html>
