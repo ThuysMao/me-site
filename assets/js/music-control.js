@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     const imageMedia = [
-        { src: "./assets/pfp/H.png" },
+        { src: "./assets/pfp/H.png", audio: "./assets/music/H.mp3" },
     ];
 
     function getWeightedRandomItem(items) {
