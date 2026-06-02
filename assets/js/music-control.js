@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPlaying = false;
     let isMuted = false;
     let previousVolume = 0.1;
-    const defaultVolume = 0.1;
+    const defaultVolume = 0.4;
     let currentMediaIndex = -1;
     let currentMode = 'music';
 
@@ -17,11 +17,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleIcon = document.getElementById('toggleIcon');
 
     const mediaPairs = [
-        { video: "./assets/back/domain.mp4", audio: "./assets/back/domain.mp4", weight: 50 },
+        {
+            video: "./assets/back/domain.mp4",
+            audio: "./assets/back/domain.mp4",
+            weight: 50
+        }
     ];
 
     const imageMedia = [
-        { src: "./assets/pfp/H.png", audio: "./assets/music/H.mp3" },
+        {
+            src: "./assets/pfp/H.png",
+            audio: "./assets/music/H.mp3",
+            weight: 100
+        }
     ];
 
     function getWeightedRandomItem(items) {
@@ -44,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateMuteButton() {
         const icon = muteBtn.querySelector('i');
+
         if (isMuted || audio.volume === 0) {
             icon.className = 'fas fa-volume-mute';
         } else if (audio.volume < 0.5) {
@@ -55,34 +64,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function playRandomSong(forcePlay = false) {
         let randomIndex;
+
         do {
             randomIndex = Math.floor(Math.random() * mediaPairs.length);
-        } while (randomIndex === currentMediaIndex && mediaPairs.length > 1);
+        } while (
+            randomIndex === currentMediaIndex &&
+            mediaPairs.length > 1
+        );
 
         currentMediaIndex = randomIndex;
+
         const selected = mediaPairs[randomIndex];
         const wasPlaying = !audio.paused;
         const currentVolume = audio.volume;
 
         if (video.tagName.toLowerCase() === 'img') {
             const parent = video.parentElement;
+
             const newVideo = document.createElement('video');
             newVideo.id = 'myVideo';
             newVideo.autoplay = true;
             newVideo.loop = true;
             newVideo.muted = true;
             newVideo.playsInline = true;
-            newVideo.style = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
+            newVideo.style =
+                'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
             parent.replaceChild(newVideo, video);
             video = newVideo;
         }
 
-        video.innerHTML = `<source src="${selected.video}" type="video/mp4">`;
+        video.innerHTML =
+            `<source src="${selected.video}" type="video/mp4">`;
+
         video.load();
         video.loop = true;
 
         if (selected.audio) {
-            audio.innerHTML = `<source src="${selected.audio}" type="audio/mpeg">`;
+            audio.innerHTML =
+                `<source src="${selected.audio}" type="audio/mpeg">`;
+
             audio.load();
             audio.volume = currentVolume;
             audio.loop = true;
@@ -92,25 +114,43 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (wasPlaying || forcePlay) {
-            video.play().catch(err => console.error("Video play error:", err));
+            video.play().catch(err =>
+                console.error("Video play error:", err)
+            );
+
             if (selected.audio) {
-                audio.play().catch(err => console.error("Audio play error:", err));
+                audio.play().catch(err =>
+                    console.error("Audio play error:", err)
+                );
             }
         }
 
         if (randomBtn) {
             randomBtn.style.transform = 'scale(0.9)';
-            setTimeout(() => randomBtn.style.transform = 'scale(1)', 150);
+
+            setTimeout(() => {
+                randomBtn.style.transform = 'scale(1)';
+            }, 150);
         }
     }
 
     playPauseBtn.addEventListener('click', function () {
         if (isPlaying) {
             audio.pause();
-            video.pause();
+
+            if (video.tagName.toLowerCase() === 'video') {
+                video.pause();
+            }
         } else {
-            audio.play().catch(err => console.error("Audio play failed:", err));
-            video.play().catch(err => console.error("Video play failed:", err));
+            audio.play().catch(err =>
+                console.error("Audio play failed:", err)
+            );
+
+            if (video.tagName.toLowerCase() === 'video') {
+                video.play().catch(err =>
+                    console.error("Video play failed:", err)
+                );
+            }
         }
     });
 
@@ -125,14 +165,20 @@ document.addEventListener('DOMContentLoaded', function () {
             volumeSlider.value = 0;
             isMuted = true;
         }
+
         updateMuteButton();
     });
 
     volumeSlider.addEventListener('input', function () {
         const volume = this.value / 100;
+
         audio.volume = volume;
         isMuted = volume === 0;
-        if (!isMuted) previousVolume = volume;
+
+        if (!isMuted) {
+            previousVolume = volume;
+        }
+
         updateMuteButton();
     });
 
@@ -141,8 +187,9 @@ document.addEventListener('DOMContentLoaded', function () {
         updateMuteButton();
     });
 
-    randomBtn.addEventListener('click', function () {
-        playRandomSong(true);
+    randomBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        return;
     });
 
     audio.addEventListener('play', function () {
@@ -161,6 +208,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.startMusicWithRandom = function () {
         switchToImageMode();
+
+        setTimeout(() => {
+            if (audio.paused) {
+                audio.play().catch(err =>
+                    console.error("Audio play error:", err)
+                );
+            }
+        }, 100);
     };
 
     setTimeout(() => {
@@ -183,41 +238,69 @@ document.addEventListener('DOMContentLoaded', function () {
         audio.innerHTML = "";
 
         if (randomItem.type === 'video') {
+
             if (video.tagName.toLowerCase() === 'img') {
                 const parent = video.parentElement;
+
                 const newVideo = document.createElement('video');
                 newVideo.id = 'myVideo';
                 newVideo.autoplay = true;
                 newVideo.loop = true;
                 newVideo.muted = true;
                 newVideo.playsInline = true;
-                newVideo.style = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
+                newVideo.style =
+                    'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
                 parent.replaceChild(newVideo, video);
                 video = newVideo;
             }
 
-            video.innerHTML = `<source src="${randomItem.src}" type="video/mp4">`;
+            video.innerHTML =
+                `<source src="${randomItem.src}" type="video/mp4">`;
+
             video.load();
             video.loop = true;
-            video.play().catch(err => console.error("Video play error:", err));
 
-            if (randomItem.audio) {
-                audio.innerHTML = `<source src="${randomItem.audio}" type="audio/mpeg">`;
-                audio.load();
-                audio.volume = volumeSlider.value / 100;
-                audio.loop = true;
-                audio.play().catch(err => console.error("Audio play error:", err));
-            }
+            video.play().catch(err =>
+                console.error("Video play error:", err)
+            );
 
         } else {
-            const parent = video.parentElement;
-            const img = document.createElement('img');
-            img.id = 'myVideo';
-            img.src = randomItem.src;
-            img.style = 'max-width:100vw;max-height:100vh;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
-            video.remove();
-            parent.prepend(img);
-            video = img;
+
+            if (video.tagName.toLowerCase() === 'video') {
+                const parent = video.parentElement;
+
+                const img = document.createElement('img');
+                img.id = 'myVideo';
+                img.src = randomItem.src;
+
+                img.style =
+                    'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
+                parent.replaceChild(img, video);
+                video = img;
+            } else {
+                video.src = randomItem.src;
+            }
+        }
+
+        if (randomItem.audio) {
+            audio.innerHTML =
+                `<source src="${randomItem.audio}" type="audio/mpeg">`;
+
+            audio.load();
+            audio.volume = volumeSlider.value / 100;
+            audio.loop = true;
+
+            audio.play()
+                .then(() => {
+                    isPlaying = true;
+                    updatePlayButton();
+                })
+                .catch(err =>
+                    console.error("Audio play error:", err)
+                );
         }
 
         toggleIcon.className = "fa-solid fa-video";
@@ -228,18 +311,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (video.tagName.toLowerCase() === 'img') {
             const parent = video.parentElement;
+
             const newVideo = document.createElement('video');
             newVideo.id = 'myVideo';
             newVideo.autoplay = true;
             newVideo.loop = true;
             newVideo.muted = true;
             newVideo.playsInline = true;
-            newVideo.style = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
+            newVideo.style =
+                'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:-1;';
+
             parent.replaceChild(newVideo, video);
             video = newVideo;
         }
 
         playRandomSong(true);
+
         toggleIcon.className = "fa-solid fa-image";
     }
 
@@ -252,8 +340,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     window.showMediaToggle = function () {
-        const toggleBtn = document.getElementById('media-toggle-buttons');
-        if (toggleBtn) toggleBtn.style.display = 'block';
+        const toggleBtn =
+            document.getElementById('media-toggle-buttons');
+
+        if (toggleBtn) {
+            toggleBtn.style.display = 'block';
+        }
     };
 
 });
