@@ -11,14 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeButton = document.getElementById('close-button');
   const skipButton = document.getElementById('skip-button');
   const links = document.querySelector('.links');
-  const systemPanel = document.getElementById('system-panel');
-  const terminalToggle = document.getElementById('terminal-toggle');
 
   if (links) links.classList.remove('links--visible');
   if (blurredBox) blurredBox.style.display = 'none';
 
   const terminalTextContent = [
-    "[BOOT] Initializing THUYSMAO OS v3.0...",
+    "[BOOT] Initializing...",
     "[BOOT] Loading profile core...",
     "IP: Loading...",
     "[SYNC] Connecting Discord presence...",
@@ -43,13 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
         terminalText.textContent += line.charAt(i);
         i++;
         const speed =
-  line.startsWith("[BOOT]") || line.startsWith("[SYNC]") || line.startsWith("[OK]")
-    ? 22
-    : line.startsWith("user@")
-    ? 38
-    : 28;
+          line.startsWith("[BOOT]") || line.startsWith("[SYNC]") || line.startsWith("[OK]")
+            ? 22
+            : line.startsWith("user@")
+              ? 38
+              : 28;
 
-typingTimeout = setTimeout(typeChar, speed);
+        typingTimeout = setTimeout(typeChar, speed);
       } else {
         terminalText.textContent += "\n";
         currentIndex++;
@@ -90,44 +88,21 @@ typingTimeout = setTimeout(typeChar, speed);
   // 🎯 Khi skip hoặc terminal kết thúc
   function handleInput() {
     const particlesBg = document.getElementById('particles-js');
-    const systemPanel = document.getElementById('system-panel');
-    const terminalToggle = document.getElementById('terminal-toggle');
-  
+
     if (particlesBg) particlesBg.style.display = 'none';
     terminalContainer.style.display = 'none';
-  
+
     if (window.startMusicWithRandom) window.startMusicWithRandom();
     if (window.showMediaToggle) window.showMediaToggle();
-  
+
     blurredBox.style.display = 'block';
     document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass');
     blurredBox.classList.add('theme-ready');
-  
-    if (window.initProfileEnhancements) {
-      window.initProfileEnhancements();
-    }
-  
-    if (systemPanel || terminalToggle) {
-      setTimeout(() => {
-        if (systemPanel) {
-          systemPanel.classList.add('show');
-  
-          const savedState = localStorage.getItem("system-panel-open");
-          if (savedState === "true") {
-            systemPanel.classList.add("open");
-          }
-        }
-  
-        if (terminalToggle) {
-          terminalToggle.classList.add('show');
-        }
-      }, 500);
-    }
-  
+
     removeEventListeners();
-  
+
     if (skipButton) skipButton.style.display = 'none';
-  
+
     const scrollContainer = document.getElementById('scroll-container');
     if (scrollContainer) {
       scrollContainer.style.display = 'inline-block';
@@ -137,7 +112,7 @@ typingTimeout = setTimeout(typeChar, speed);
         setTimeout(() => marquee.start(), 50);
       }
     }
-  
+
     if (links) links.classList.add('links--visible');
   }
 
@@ -229,7 +204,7 @@ typingTimeout = setTimeout(typeChar, speed);
     return version ? "iOS " + version[1].replace(/_/g, '.') : "iOS";
   }
 
-  
+
   terminalTextContent[2] = "System: " + getOperatingSystem();
 
   // 📐 Căn giữa terminal
@@ -247,9 +222,7 @@ typingTimeout = setTimeout(typeChar, speed);
   // 🎨 ASCII
   function getAsciiArt() {
     return `
-  ┌───────────────────────┐
-  │      THUYSMAO OS      │
-  └───────────────────────┘
+          LOADING...      
   `;
   }
 
@@ -260,11 +233,6 @@ typingTimeout = setTimeout(typeChar, speed);
   }
   limitVolume(1);
 
-  // 🚫 Chặn zoom
-  window.addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
-  window.addEventListener('keydown', e => {
-    if (e.ctrlKey && ['+', '-', '='].includes(e.key)) e.preventDefault();
-  });
 
   // 🕒 Đồng hồ
   function updateClock() {
@@ -309,232 +277,11 @@ typingTimeout = setTimeout(typeChar, speed);
     script.onload = initParticles;
     document.head.appendChild(script);
   }
-});
 
-window.initProfileEnhancements = (() => {
-  let initialized = false;
-
-  return function initProfileEnhancements() {
-    if (initialized) return;
-    initialized = true;
-
-    const loadingEl = document.getElementById("loading-status");
-    const statUptime = document.getElementById("stat-uptime");
-    const statTheme = document.getElementById("stat-theme");
-    const statMedia = document.getElementById("stat-media");
-    const statDiscord = document.getElementById("stat-discord");
-    const statSong = document.getElementById("stat-song");
-    const themeButtons = document.querySelectorAll(".theme-btn");
-    const blurredBox = document.getElementById("blurred-box");
-
-    const loadingMessages = [
-      "Initializing presence...",
-      "Syncing with Discord...",
-      "Loading blackhole scene...",
-      "Booting THUYSMÃO system...",
-      "Calibrating neon interface...",
-      "Connecting to presence gateway..."
-    ];
-
-    const state = {
-      theme: localStorage.getItem("site-theme") || "cyber-neon",
-      currentMedia: "Unknown",
-      discordStatus: "offline",
-      currentSong: "None"
-    };
-
-    function setRandomLoadingMessage() {
-      if (!loadingEl) return;
-      const random = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
-      loadingEl.textContent = random;
+  // 🚫 Chặn kéo thả hình ảnh
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
     }
-
-    function applyTheme(themeName) {
-      document.body.classList.remove("cyber-neon", "pink-anime", "dark-glass");
-      document.body.classList.add(themeName);
-
-      state.theme = themeName;
-      localStorage.setItem("site-theme", themeName);
-
-      themeButtons.forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.theme === themeName);
-      });
-
-      if (statTheme) statTheme.textContent = themeName;
-      if (blurredBox) blurredBox.classList.add("theme-ready");
-    }
-
-    function formatUptime(seconds) {
-      const h = Math.floor(seconds / 3600);
-      const m = Math.floor((seconds % 3600) / 60);
-      const s = seconds % 60;
-
-      if (h > 0) return `${h}h ${m}m ${s}s`;
-      if (m > 0) return `${m}m ${s}s`;
-      return `${s}s`;
-    }
-
-    const bootTime = Date.now();
-
-    function updateUptime() {
-      const seconds = Math.floor((Date.now() - bootTime) / 1000);
-      if (statUptime) statUptime.textContent = formatUptime(seconds);
-    }
-
-    function detectCurrentMedia() {
-      const video = document.getElementById("myVideo");
-      if (!video || !video.src) return "Unknown";
-
-      try {
-        const url = new URL(video.src, window.location.href);
-        const filename = url.pathname.split("/").pop();
-        return filename || "Unknown";
-      } catch {
-        return video.src.split("/").pop() || "Unknown";
-      }
-    }
-
-    function updateStats() {
-      state.currentMedia = detectCurrentMedia();
-
-      if (statTheme) statTheme.textContent = state.theme;
-      if (statMedia) statMedia.textContent = state.currentMedia;
-      if (statDiscord) statDiscord.textContent = state.discordStatus;
-      if (statSong) statSong.textContent = state.currentSong;
-    }
-
-    function extractDiscordData() {
-      const statusText = document.getElementById("discord-status-text");
-      const activityName = document.getElementById("discord-activity-name");
-      const activityDetails = document.getElementById("discord-activity-details");
-      const activityState = document.getElementById("discord-activity-state");
-      const noActivity = document.getElementById("discord-no-activity");
-
-      let status = "offline";
-      let song = "None";
-
-      if (statusText && statusText.textContent.trim()) {
-        status = statusText.textContent.trim().toLowerCase();
-      } else {
-        const statusDot = document.getElementById("discord-status-dot");
-        if (statusDot?.classList.contains("status-online")) status = "online";
-        else if (statusDot?.classList.contains("status-idle")) status = "idle";
-        else if (statusDot?.classList.contains("status-dnd")) status = "dnd";
-      }
-
-      if (activityName && activityName.textContent.trim()) {
-        const name = activityName.textContent.trim();
-        const details = activityDetails?.textContent?.trim() || "";
-        const stateText = activityState?.textContent?.trim() || "";
-
-        song = [name, details, stateText].filter(Boolean).join(" — ");
-      } else if (noActivity && !noActivity.classList.contains("hidden")) {
-        song = "None";
-      }
-
-      state.discordStatus = status;
-      state.currentSong = song || "None";
-      updateStats();
-    }
-
-    themeButtons.forEach(btn => {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.theme));
-    });
-
-    applyTheme(state.theme);
-    setRandomLoadingMessage();
-    updateUptime();
-    updateStats();
-    extractDiscordData();
-
-    setInterval(updateUptime, 1000);
-    setInterval(() => {
-      setRandomLoadingMessage();
-      updateStats();
-      extractDiscordData();
-    }, 12000);
-
-    const observer = new MutationObserver(() => {
-      extractDiscordData();
-      updateStats();
-    });
-
-    [
-      document.getElementById("discord-status-dot"),
-      document.getElementById("discord-status-text"),
-      document.getElementById("discord-activity-name"),
-      document.getElementById("discord-activity-details"),
-      document.getElementById("discord-activity-state"),
-      document.getElementById("discord-no-activity"),
-      document.getElementById("myVideo")
-    ]
-      .filter(Boolean)
-      .forEach(node => {
-        observer.observe(node, {
-          attributes: true,
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-      });
-  };
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const systemPanel = document.getElementById("system-panel");
-  const systemPanelToggle = document.getElementById("system-panel-toggle");
-
-  if (!systemPanel || !systemPanelToggle) return;
-
-  systemPanelToggle.addEventListener("click", () => {
-    systemPanel.classList.toggle("open");
-
-    localStorage.setItem(
-      "system-panel-open",
-      systemPanel.classList.contains("open")
-    );
   });
 });
-
-function applyTheme(themeName) {
-  document.body.classList.remove(
-    "cyber-neon",
-    "pink-anime",
-    "dark-glass"
-  );
-
-  document.body.classList.add(themeName);
-  localStorage.setItem("site-theme", themeName);
-
-  document.querySelectorAll(".theme-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.theme === themeName);
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("site-theme") || "cyber-neon";
-  applyTheme(savedTheme);
-
-  document.querySelectorAll(".theme-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      applyTheme(btn.dataset.theme);
-    });
-  });
-});
-
-if (systemPanel || terminalToggle) {
-  setTimeout(() => {
-    if (systemPanel) {
-      systemPanel.classList.add('show');
-
-      const savedState = localStorage.getItem("system-panel-open");
-      if (savedState === "true") {
-        systemPanel.classList.add("open");
-      }
-    }
-
-    if (terminalToggle) {
-      terminalToggle.classList.add('show');
-    }
-  }, 500);
-}
