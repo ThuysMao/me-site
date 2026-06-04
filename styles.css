@@ -1678,3 +1678,54 @@ body {
   filter: blur(4px);
   z-index: -1;
 }
+
+/* --- COMPREHENSIVE MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+  /* Center terminal */
+  #terminal {
+    width: 90% !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  /* Scale down game badges */
+  .faceit, .valorant, .csgo {
+    transform: scale(0.8);
+    transform-origin: left top;
+  }
+  .faceit { top: 10px !important; left: 10px !important; }
+  .valorant { top: 45px !important; left: 10px !important; }
+  .csgo { top: 80px !important; left: 10px !important; }
+
+  /* Adjust clock position */
+  #clock {
+    right: 15px !important;
+    top: 10px !important;
+    font-size: 15px;
+  }
+
+  /* Prevent media buttons from overlapping the music player */
+  #media-toggle-buttons {
+    bottom: 120px !important;
+    right: 15px !important;
+  }
+
+  /* Hide custom dot scrollbar on mobile (touch handles it natively) */
+  .dot-scrollbar {
+    display: none !important;
+  }
+  
+  /* Adjust title and footer text sizes */
+  #username-container {
+    font-size: 20px;
+    padding: 4px 12px;
+  }
+  
+  .footer-bottom p {
+    font-size: 12px;
+  }
+  
+  .footer-bottom span {
+    font-size: 8px !important;
+  }
+}
