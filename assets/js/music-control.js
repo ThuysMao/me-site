@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPlaying = false;
     let isMuted = false;
     let previousVolume = 0.1;
-    const defaultVolume = 0.4;
+    const defaultVolume = 0.2;
     let currentMediaIndex = -1;
     let currentMode = 'music';
 

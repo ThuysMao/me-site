@@ -1,5 +1,13 @@
 html {
   cursor: url('assets/cursor/mao.png'), auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -1270,6 +1278,7 @@ body.dark-glass {
 /* Allow scrolling on body once loaded but hide scrollbar */
 body.allow-scroll {
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   scrollbar-width: none !important;
   /* Firefox */
   -ms-overflow-style: none !important;
@@ -1595,4 +1604,77 @@ body.allow-scroll .site-footer {
   .site-footer {
     padding: 40px 20px 20px 20px;
   }
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+body::-webkit-scrollbar {
+  display: none;
+}
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dot-scrollbar {
+  bottom: 45%;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 12px;
+  top: 45%;
+  transition: opacity .3s ease;
+  width: 16px;
+  z-index: 10010;
+}
+
+.dot-scrollbar.is-scrolling {
+  opacity: 1;
+}
+
+.scrollbar-track {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.track-line {
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: 2px;
+  border-radius: 2px;
+}
+
+.scrollbar-dot {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  /* Smooth interpolation is handled by JS requestAnimationFrame mostly, but a tiny transition helps */
+}
+
+.dot-inner {
+  background-color: #FFD700;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.dot-glow {
+  background-color: rgba(255, 215, 0, 0.6);
+  border-radius: 50%;
+  height: 200%;
+  width: 200%;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  filter: blur(4px);
+  z-index: -1;
 }

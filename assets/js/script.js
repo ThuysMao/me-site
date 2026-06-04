@@ -118,6 +118,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize the clocks for footer
     initFooterClocks();
+
+    // Initialize Lenis smooth scroll after page is scrollable
+    initLenis();
   }
 
   // 🕒 Đồng hồ footer (Live clocks)
@@ -325,12 +328,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // 🖱️ Lenis Smooth Scroll
-  if (typeof Lenis !== 'undefined') {
+  // 🖱️ Lenis Smooth Scroll (khởi tạo sau khi terminal xong)
+  function initLenis() {
+    if (typeof Lenis === 'undefined') return;
+
     const lenis = new Lenis({
-      lerp: 0.1, // Độ mượt của cuộn
+      lerp: 0.1,
       smoothWheel: true
     });
+
+    const dotScrollbar = document.querySelector('.dot-scrollbar');
+    const scrollbarDot = document.querySelector('.scrollbar-dot');
+    let scrollTimeout;
+
+    lenis.on('scroll', (e) => {
+      if (dotScrollbar && scrollbarDot) {
+        dotScrollbar.classList.add('is-scrolling');
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          dotScrollbar.classList.remove('is-scrolling');
+        }, 1000);
+
+        const maxScroll = e.limit;
+        const currentScroll = e.scroll;
+        const percentage = maxScroll > 0 ? (currentScroll / maxScroll) * 100 : 0;
+        scrollbarDot.style.top = `${percentage}%`;
+      }
+    });
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
