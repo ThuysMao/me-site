@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     blurredBox.style.display = 'block';
     document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass');
+    document.body.classList.add('allow-scroll');
     blurredBox.classList.add('theme-ready');
 
     removeEventListeners();
@@ -114,6 +115,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (links) links.classList.add('links--visible');
+
+    // Initialize the clocks for footer
+    initFooterClocks();
+  }
+
+  // 🕒 Đồng hồ footer (Live clocks)
+  function initFooterClocks() {
+    const timeHcm = document.getElementById('time-hcm');
+    const timeShanghai = document.getElementById('time-shanghai');
+    if (!timeHcm || !timeShanghai) return;
+
+    function updateFooterClocks() {
+      const now = new Date();
+
+      // Ho Chi Minh (UTC+7)
+      try {
+        timeHcm.textContent = now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Ho_Chi_Minh',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      } catch (e) {
+        console.error("Error setting HCMC time:", e);
+      }
+
+      // Shanghai (UTC+8)
+      try {
+        timeShanghai.textContent = now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Shanghai',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      } catch (e) {
+        console.error("Error setting Shanghai time:", e);
+      }
+    }
+
+    updateFooterClocks();
+    setInterval(updateFooterClocks, 1000);
   }
 
   // 🎬 Khi ấn Skip
