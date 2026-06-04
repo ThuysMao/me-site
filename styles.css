@@ -8,6 +8,15 @@ body {
   font-family: 'Comic Neue', cursive;
   overflow: hidden;
   background-color: black;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 .custom-cursor {
@@ -1249,9 +1258,20 @@ body.dark-glass {
   }
 }
 
-/* Allow scrolling on body once loaded */
+/* Allow scrolling on body once loaded but hide scrollbar */
 body.allow-scroll {
   overflow-y: auto !important;
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE/Edge */
+}
+
+body.allow-scroll::-webkit-scrollbar {
+  display: none !important;
+  /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* White Footer Section Styling */
@@ -1267,19 +1287,153 @@ body.allow-scroll {
   padding: 60px 40px 30px 40px;
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
   font-family: 'Inter', sans-serif;
+  display: none;
+}
+
+body.allow-scroll .site-footer {
+  display: block;
 }
 
 .footer-container {
-  display: grid;
-  grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr;
-  gap: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+  padding-left: 130px;
+  padding-right: 130px;
+  box-sizing: border-box;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.footer-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0;
+}
+
+.music-disc-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.vinyl-disc {
+  position: relative;
+  width: 272px;
+  height: 272px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0d0d0d 30%, #1a1a1a 40%, #0d0d0d 50%, #262626 60%, #0d0d0d 70%);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.5), inset 0 0 18px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.vinyl-disc::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px double rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.vinyl-disc::after {
+  content: '';
+  position: absolute;
+  inset: 37px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+}
+
+.vinyl-center {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: #222;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.vinyl-center::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.vinyl-disc.playing {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.music-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.music-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-artist {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: #777777;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .footer-col {
   display: flex;
   flex-direction: column;
+}
+
+.footer-about {
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .footer-col h4 {
@@ -1295,16 +1449,15 @@ body.allow-scroll {
 }
 
 .footer-logo {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 800;
   color: #000000;
-  margin-top: 0;
-  margin-bottom: 16px;
-  letter-spacing: 0.05em;
+  margin: 0;
+  letter-spacing: 0.06em;
 }
 
 .footer-description {
-  font-size: 13.5px;
+  font-size: 15px;
   color: #555555;
   line-height: 1.6;
   margin: 0;
@@ -1320,7 +1473,7 @@ body.allow-scroll {
 .footer-links li,
 .footer-list li {
   margin-bottom: 12px;
-  font-size: 13.5px;
+  font-size: 15px;
   color: #555555;
   display: flex;
   align-items: center;
@@ -1334,6 +1487,7 @@ body.allow-scroll {
   text-transform: none !important;
   font-family: 'Inter', sans-serif !important;
   color: #555555 !important;
+  font-size: 15px !important;
   margin: 0 !important;
   text-align: left !important;
   display: inline-flex !important;
@@ -1350,7 +1504,7 @@ body.allow-scroll {
 .site-footer i {
   font-size: 15px;
   width: 18px;
-  color: #777777;
+  color: #555555;
   text-align: center;
 }
 
@@ -1364,27 +1518,25 @@ body.allow-scroll {
 /* Live Clocks styling */
 .clock-item {
   display: flex;
-  align-items: flex-start !important;
+  align-items: center !important;
   gap: 10px;
 }
 
-.clock-item div {
-  display: flex;
-  flex-direction: column;
+.clock-item>span:first-of-type {
+  font-size: 15px;
 }
 
 .timezone-label {
-  font-size: 12px;
-  color: #888888;
-  font-weight: 500;
+  font-size: 15px;
+  color: #555555;
+  font-weight: normal;
 }
 
 .timezone-time {
   font-family: 'Roboto Mono', monospace;
-  font-size: 16px;
-  font-weight: 600;
-  color: #222222;
-  margin-top: 2px;
+  font-size: 15px;
+  font-weight: normal;
+  color: #555555;
 }
 
 /* Footer Bottom styling */
@@ -1396,7 +1548,7 @@ body.allow-scroll {
 }
 
 .footer-bottom p {
-  font-size: 12px;
+  font-size: 15px;
   color: #888888;
   margin: 0;
 }
@@ -1404,17 +1556,20 @@ body.allow-scroll {
 /* Responsive rules */
 @media (max-width: 992px) {
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 40px;
+    gap: 40px;
+  }
+
+  .footer-right {
+    align-self: flex-start;
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 
 @media (max-width: 576px) {
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-
   .site-footer {
     padding: 40px 20px 20px 20px;
   }

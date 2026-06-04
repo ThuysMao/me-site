@@ -251,6 +251,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (discord.listening_to_spotify && discord.spotify) {
         rendered = renderSpotify(discord.spotify);
+        if (window.footerMusicState) {
+          window.footerMusicState.spotifyActive = true;
+          window.footerMusicState.spotifyTitle = discord.spotify.song;
+          window.footerMusicState.spotifyArtist = discord.spotify.artist;
+          window.footerMusicState.spotifyCover = discord.spotify.album_art_url;
+          window.refreshFooterMusicDisplay();
+        }
+      } else {
+        if (window.footerMusicState) {
+          window.footerMusicState.spotifyActive = false;
+          window.refreshFooterMusicDisplay();
+        }
       }
 
       if (!rendered) {
@@ -267,6 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
       clearAlbumArt();
       showNoActivity();
       hideSyncIndicator();
+      if (window.footerMusicState) {
+        window.footerMusicState.spotifyActive = false;
+        window.refreshFooterMusicDisplay();
+      }
     }
   }
 

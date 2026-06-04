@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.clear();
 
   console.log(
-    "%c████ THUYSMAO SYSTEM v2.0 ████",
+    "%c████ THUYSMAO ████",
     `
     color:${theme.cyan};
     font-size:30px;
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "%c📘 COMMAND LIST",
       `color:${theme.cyan};font-size:20px;font-weight:bold;`
     );
-  
+
     console.table([
       { command: "help()", description: "Show all commands" },
       { command: "about()", description: "About this site" },
@@ -117,23 +117,23 @@ document.addEventListener("DOMContentLoaded", () => {
   window.status = () => {
     const video = document.getElementById("myVideo");
     const audio = document.getElementById("myAudio");
-  
+
     const videoStatus =
       video && !video.paused ? "Playing" : "Paused";
-  
+
     const audioStatus =
       audio && !audio.paused ? "Playing" : "Paused";
-  
+
     const terminalOpen =
       !document
         .getElementById("terminal-overlay")
         ?.classList.contains("hidden");
-  
+
     console.log(
       "%c🟢 SYSTEM STATUS",
       `color:${theme.green};font-size:18px;font-weight:bold;`
     );
-  
+
     console.table([
       { item: "Console", value: "Online" },
       { item: "Video", value: videoStatus },
@@ -150,14 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ["cyber-neon", "pink-anime", "dark-glass", "red-alert"].includes(cls)
       ) ||
       "cyber-neon";
-  
+
     console.log(
       "%c🎨 ACTIVE THEME",
       `color:${theme.pink};font-size:18px;font-weight:bold;`
     );
-  
+
     console.log(`%cTheme: ${activeTheme}`, "color:white;");
-  
+
     console.table(theme);
   };
 
@@ -176,7 +176,7 @@ window.whoami = () => {
 window.matrix = () => {
   const chars =
     "01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
-    
+
   const rows = 14;          // số dòng mỗi frame
   const cols = 48;          // độ dài mỗi dòng
   const duration = 30000;   // 30 giây

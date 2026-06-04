@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             video: "./assets/back/domain.mp4",
             audio: "./assets/back/domain.mp4",
+            title: "Domain Expansion",
+            artist: "Jujutsu Kaisen",
+            cover: "./assets/favico/icon.png",
             weight: 50
         }
     ];
@@ -27,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const imageMedia = [
         {
             src: "./assets/pfp/H.png",
-            audio: "./assets/music/H.mp3",
+            audio: "./assets/music/Ariana Grande - bye [Altare Remix, slow].mp3",
+            title: "bye [Altare Remix, slow]",
+            artist: "Ariana Grande",
+            cover: "./assets/pfp/H.png",
             weight: 100
         }
     ];
@@ -192,14 +198,33 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     });
 
+    function updateLocalMusicState(title, artist, cover, isPlaying) {
+        if (window.footerMusicState) {
+            window.footerMusicState.localActive = true;
+            window.footerMusicState.localTitle = title;
+            window.footerMusicState.localArtist = artist;
+            window.footerMusicState.localCover = cover;
+            window.footerMusicState.localPlaying = isPlaying;
+            window.refreshFooterMusicDisplay();
+        }
+    }
+
     audio.addEventListener('play', function () {
         isPlaying = true;
         updatePlayButton();
+        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        if (selected) {
+            updateLocalMusicState(selected.title, selected.artist, selected.cover, true);
+        }
     });
 
     audio.addEventListener('pause', function () {
         isPlaying = false;
         updatePlayButton();
+        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        if (selected) {
+            updateLocalMusicState(selected.title, selected.artist, selected.cover, false);
+        }
     });
 
     audio.addEventListener('ended', function () {
@@ -227,6 +252,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         updatePlayButton();
         updateMuteButton();
+
+        // Initialize state on page load
+        const initialSong = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        if (initialSong) {
+            updateLocalMusicState(initialSong.title, initialSong.artist, initialSong.cover, isPlaying);
+        }
     }, 500);
 
     function switchToImageMode() {
