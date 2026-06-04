@@ -147,14 +147,6 @@
           <img src="./assets/pfp/heart.png" alt="Heart Icon" height="20"
             style="vertical-align: middle; margin-left: 8px;" />
         </a>
-        <a href="https://discord.com/users/985537688159522847" target="_blank" class="social-link"><i
-            class="fab fa-discord"></i></a>
-        <a href="https://www.facebook.com/kn1zmonster/" target="_blank" class="social-link"><i
-            class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.faceit.com/en/players/DamCuoiChuot" target="_blank" class="social-link"><i
-            class="fa-brands fa-steam"></i></a>
-        <a href="https://kusuriya.fandom.com/wiki/Maomao" target="_blank" class="social-link"><i
-            class="fa fa-globe"></i></a>
       </marquee>
     </div>
   </div>
@@ -193,15 +185,6 @@
     <i id="toggleIcon" class="fa-solid fa-image"></i>
   </div>
 
-  <div class="credit-line credit-visible">
-    ©2025 ThuysMão. Built from the ground up. All rights reserved.
-    |
-    <a href="https://www.dmca.com/Protection/Status.aspx?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
-      title="DMCA.com Protection Status" class="dmca-badge">
-      <img src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-06.png?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
-        alt="DMCA.com Protection Status" style="height:16px; vertical-align:middle;" /></a>
-    <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
-  </div>
 
   <!-- White Footer Section -->
   <footer class="site-footer">
@@ -234,6 +217,18 @@
             <li>
               <a href="https://github.com/ThuysMao" target="_blank" rel="noopener noreferrer" class="custom-cursor">
                 <i class="fa-brands fa-github"></i> github.com/ThuysMao
+              </a>
+            </li>
+            <li>
+              <a href="https://steamcommunity.com/profiles/76561199881574505" target="_blank" rel="noopener noreferrer"
+                class="custom-cursor">
+                <i class="fa-brands fa-steam"></i> Main Account
+              </a>
+            </li>
+            <li>
+              <a href="http://steamcommunity.com/profiles/76561198755713182" target="_blank" rel="noopener noreferrer"
+                class="custom-cursor">
+                <i class="fa-brands fa-steam"></i> Backup Account
               </a>
             </li>
             <li>
@@ -279,7 +274,15 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 THUYSMAO. Built from the ground up. All rights reserved.</p>
+      <p>&copy; 2026 THUYSMAO. Built from the ground up. All rights reserved.
+        &nbsp;|&nbsp;
+        <a href="https://www.dmca.com/Protection/Status.aspx?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
+          title="DMCA.com Protection Status" class="dmca-badge">
+          <img src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-06.png?ID=7135a7d1-3571-47a8-a1e6-043b187408b0"
+            alt="DMCA.com Protection Status" style="height:21px;" />
+        </a>
+        <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+      </p>
     </div>
   </footer>
 
@@ -310,6 +313,7 @@
       localTitle: '',
       localArtist: '',
       localCover: '',
+      localLink: '',
       localPlaying: false
     };
 
@@ -319,6 +323,7 @@
       let artist = 'No audio active';
       let cover = '';
       let playing = false;
+      let link = '';
 
       if (state.spotifyActive) {
         title = state.spotifyTitle;
@@ -330,6 +335,7 @@
         artist = state.localArtist;
         cover = state.localCover;
         playing = state.localPlaying;
+        link = state.localLink || '';
       }
 
       const vinyl = document.getElementById('footer-vinyl');
@@ -337,7 +343,13 @@
       const titleEl = document.getElementById('footer-music-title');
       const artistEl = document.getElementById('footer-music-artist');
 
-      if (titleEl) titleEl.textContent = title;
+      if (titleEl) {
+        if (link) {
+          titleEl.innerHTML = `<a href="${link}" target="_blank" rel="noopener noreferrer" class="music-title-link">${title}</a>`;
+        } else {
+          titleEl.textContent = title;
+        }
+      }
       if (artistEl) artistEl.textContent = artist;
 
       if (center) {
@@ -372,6 +384,7 @@
   <script src="./assets/js/tilt-effect.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 
   <script src="./assets/js/script.js" defer></script>
 

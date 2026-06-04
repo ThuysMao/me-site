@@ -314,4 +314,27 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
     }
   });
+
+  // 📜 Hiệu ứng fade mượt khi cuộn trang
+  window.addEventListener('scroll', function () {
+    const elements = document.querySelectorAll('.faceit, .valorant, .csgo, #scroll-container, #media-toggle-buttons');
+    if (window.scrollY > 50) {
+      elements.forEach(el => el.classList.add('scrolled-out'));
+    } else {
+      elements.forEach(el => el.classList.remove('scrolled-out'));
+    }
+  });
+
+  // 🖱️ Lenis Smooth Scroll
+  if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      lerp: 0.1, // Độ mượt của cuộn
+      smoothWheel: true
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
 });

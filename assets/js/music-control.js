@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: "bye [Altare Remix, slow]",
             artist: "Ariana Grande",
             cover: "./assets/pfp/H.png",
+            link: "https://www.youtube.com/watch?v=agneRtEe-t8",
             weight: 100
         }
     ];
@@ -198,13 +199,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     });
 
-    function updateLocalMusicState(title, artist, cover, isPlaying) {
+    function updateLocalMusicState(title, artist, cover, isPlaying, link) {
         if (window.footerMusicState) {
             window.footerMusicState.localActive = true;
             window.footerMusicState.localTitle = title;
             window.footerMusicState.localArtist = artist;
             window.footerMusicState.localCover = cover;
             window.footerMusicState.localPlaying = isPlaying;
+            window.footerMusicState.localLink = link || '';
             window.refreshFooterMusicDisplay();
         }
     }
@@ -214,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePlayButton();
         const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
         if (selected) {
-            updateLocalMusicState(selected.title, selected.artist, selected.cover, true);
+            updateLocalMusicState(selected.title, selected.artist, selected.cover, true, selected.link);
         }
     });
 
@@ -223,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePlayButton();
         const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
         if (selected) {
-            updateLocalMusicState(selected.title, selected.artist, selected.cover, false);
+            updateLocalMusicState(selected.title, selected.artist, selected.cover, false, selected.link);
         }
     });
 
@@ -256,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Initialize state on page load
         const initialSong = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
         if (initialSong) {
-            updateLocalMusicState(initialSong.title, initialSong.artist, initialSong.cover, isPlaying);
+            updateLocalMusicState(initialSong.title, initialSong.artist, initialSong.cover, isPlaying, initialSong.link);
         }
     }, 500);
 
