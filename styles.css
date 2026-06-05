@@ -1610,6 +1610,7 @@ body.allow-scroll .site-footer {
 body::-webkit-scrollbar {
   display: none;
 }
+
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -1638,27 +1639,31 @@ body {
 }
 
 .track-line {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(95, 183, 214, 0.1);
   height: 100%;
   left: 50%;
   position: absolute;
   top: 0;
   transform: translateX(-50%);
-  width: 2px;
-  border-radius: 2px;
+  width: 3.5px;
+  /* Dày hơn 2px ban đầu */
+  border-radius: 3.5px;
+  /* Bo góc tương ứng */
 }
 
 .scrollbar-dot {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  /* Tăng kích cỡ dot một chút */
+  height: 10px;
   /* Smooth interpolation is handled by JS requestAnimationFrame mostly, but a tiny transition helps */
 }
 
 .dot-inner {
-  background-color: #FFD700;
+  background-color: #00bfff;
+  /* Màu xanh nước biển */
   border-radius: 50%;
   height: 100%;
   width: 100%;
@@ -1668,7 +1673,8 @@ body {
 }
 
 .dot-glow {
-  background-color: rgba(255, 215, 0, 0.6);
+  background-color: rgba(0, 191, 255, 0.6);
+  /* Đổi màu viền sáng xanh */
   border-radius: 50%;
   height: 200%;
   width: 200%;
@@ -1681,6 +1687,7 @@ body {
 
 /* --- COMPREHENSIVE MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
+
   /* Center terminal */
   #terminal {
     width: 90% !important;
@@ -1689,13 +1696,27 @@ body {
   }
 
   /* Scale down game badges */
-  .faceit, .valorant, .csgo {
+  .faceit,
+  .valorant,
+  .csgo {
     transform: scale(0.8);
     transform-origin: left top;
   }
-  .faceit { top: 10px !important; left: 10px !important; }
-  .valorant { top: 45px !important; left: 10px !important; }
-  .csgo { top: 80px !important; left: 10px !important; }
+
+  .faceit {
+    top: 10px !important;
+    left: 10px !important;
+  }
+
+  .valorant {
+    top: 45px !important;
+    left: 10px !important;
+  }
+
+  .csgo {
+    top: 80px !important;
+    left: 10px !important;
+  }
 
   /* Adjust clock position */
   #clock {
@@ -1714,17 +1735,17 @@ body {
   .dot-scrollbar {
     display: none !important;
   }
-  
+
   /* Adjust title and footer text sizes */
   #username-container {
     font-size: 20px;
     padding: 4px 12px;
   }
-  
+
   .footer-bottom p {
     font-size: 12px;
   }
-  
+
   .footer-bottom span {
     font-size: 8px !important;
   }

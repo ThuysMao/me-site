@@ -341,6 +341,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const scrollbarDot = document.querySelector('.scrollbar-dot');
     let scrollTimeout;
 
+    // Hiển thị scrollbar ngay khi terminal kết thúc
+    if (dotScrollbar) {
+      dotScrollbar.classList.add('is-scrolling');
+      scrollTimeout = setTimeout(() => {
+        dotScrollbar.classList.remove('is-scrolling');
+      }, 1500);
+    }
+
     lenis.on('scroll', (e) => {
       if (dotScrollbar && scrollbarDot) {
         dotScrollbar.classList.add('is-scrolling');
