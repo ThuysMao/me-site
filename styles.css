@@ -488,7 +488,7 @@ img {
 #discord-album-art {
   width: 80px;
   height: 80px;
-  border-radius: 12px;
+  border-radius: 20px;
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
@@ -496,6 +496,7 @@ img {
   background-color: #333;
   border: 2px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  margin-left: 16px;
 }
 
 .discord-activity-content {

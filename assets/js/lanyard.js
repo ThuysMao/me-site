@@ -88,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getDiscordAvatarUrl(discordUser) {
     if (!discordUser?.id || !discordUser?.avatar) return '';
-    return `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=256`;
+    const ext = discordUser.avatar.startsWith('a_') ? 'gif' : 'png';
+    return `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.${ext}?size=256`;
   }
 
   function updateAvatar(discordUser) {
@@ -144,6 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return `https://i.scdn.co/image/${asset.slice(8)}`;
     }
 
+    // External asset
+    if (asset.startsWith('external/')) {
+      return `https://media.discordapp.net/${asset}`;
+    }
+
     // Direct URL
     if (asset.startsWith('https://') || asset.startsWith('http://')) {
       return asset;
@@ -157,18 +163,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return '';
   }
 
+  function getAppIconUrl(activity) {
+    if (!activity?.application_id) return '';
+    // Fallback: dùng icon của app từ Discord CDN thông qua proxy dstn.to
+    return `https://dcdn.dstn.to/app-icons/${activity.application_id}`;
+  }
+
   function getBestDiscordImage(activity) {
-    if (!activity?.assets) return '';
+    if (!activity) return '';
 
-    if (activity.assets.large_image) {
-      return getAssetUrl(activity.assets.large_image, activity.application_id);
+    // Thử lấy ảnh từ assets trước
+    if (activity.assets) {
+      if (activity.assets.large_image) {
+        return getAssetUrl(activity.assets.large_image, activity.application_id);
+      }
+
+      if (activity.assets.small_image) {
+        return getAssetUrl(activity.assets.small_image, activity.application_id);
+      }
     }
 
-    if (activity.assets.small_image) {
-      return getAssetUrl(activity.assets.small_image, activity.application_id);
-    }
-
-    return '';
+    // Fallback: dùng icon của ứng dụng (e.g. CS2, Valorant không có assets)
+    return getAppIconUrl(activity);
   }
 
   function getDisplayActivity(activities) {
