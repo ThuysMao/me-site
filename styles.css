@@ -206,6 +206,19 @@ img {
   margin-bottom: 10px;
 }
 
+#profile-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 190px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
 #profile-picture {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 3px solid rgba(255, 255, 255, 0.2);
@@ -219,8 +232,10 @@ img {
 }
 
 .profile-picture-container {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  top: 120px;
+  left: 20px;
+  z-index: 2;
 }
 
 .sync-indicator {
@@ -317,8 +332,8 @@ img {
 
 #avatar-frame {
   position: absolute;
-  top: 80px;
-  left: 50%;
+  top: 180px;
+  left: 80px;
   transform: translate(-50%, -50%) scale(1.2);
   width: 160px;
   height: 160px;
@@ -356,8 +371,8 @@ img {
 
 #username-container {
   position: absolute;
-  top: 110px;
-  left: 50%;
+  top: 210px;
+  left: 85px;
   transform: translateX(-50%);
   z-index: 1001;
   padding: 5px 15px;
@@ -377,9 +392,9 @@ img {
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px;
   border-radius: 12px;
-  padding: 12px;
+  padding: 8px 12px;
   margin: 15px auto;
-  margin-top: 85px !important;
+  margin-top: 285px !important;
   width: 90%;
   max-width: 360px;
   backdrop-filter: blur(10px);
@@ -392,7 +407,7 @@ img {
 .discord-content {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .discord-icon img {
@@ -457,11 +472,11 @@ img {
   display: flex;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 12px;
+  padding: 6px 12px;
   border-radius: 13px;
-  font-size: 14px;
+  font-size: 13px;
   color: #ccc;
-  min-height: 104px;
+  min-height: 80px;
   overflow: hidden;
 }
 
@@ -469,7 +484,7 @@ img {
 #discord-no-activity {
   position: absolute;
   inset: 0;
-  padding: 12px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   transition: opacity 0.35s ease;
@@ -486,9 +501,9 @@ img {
 }
 
 #discord-album-art {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
@@ -508,18 +523,18 @@ img {
 }
 
 #discord-activity-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   font-style: normal;
 }
 
 #discord-activity-details,
 #discord-activity-state {
-  font-size: 14px;
+  font-size: 11px;
   color: #ccc;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -539,15 +554,18 @@ img {
 
 .badges-container {
   position: absolute;
-  top: 185px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 200px;
+  right: 20px;
+  left: auto;
+  transform: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
   gap: 10px;
-  width: 90%;
+  width: auto;
+  max-width: 250px;
   z-index: 1001;
-  margin-top: 20px;
+  margin-top: 0;
   flex-wrap: wrap;
 }
 
@@ -557,6 +575,39 @@ img {
   border-radius: 0 !important;
   object-fit: contain;
   transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.tagText {
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  display: inline-block;
+  text-shadow: none;
+}
+
+#discord-clan-container {
+  position: absolute;
+  top: 200px;
+  left: 155px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 1001;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#discord-clan-container img {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  margin: 0 !important;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
