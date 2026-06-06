@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const blurredBox = document.getElementById('blurred-box');
   if (!blurredBox) return;
 
@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const rect = blurredBox.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
+
     const rotateY = (x - centerX) / 30;
     const rotateX = (centerY - y) / 30;
-    
+
     blurredBox.style.setProperty('--rotate-x', `${rotateX}deg`);
     blurredBox.style.setProperty('--rotate-y', `${rotateY}deg`);
   };
