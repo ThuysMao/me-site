@@ -385,6 +385,35 @@
     </div>
   </div>
 
+  <!-- Discord Clan Click Handler -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const clanContainer = document.getElementById('discord-clan-container');
+      if (clanContainer) {
+        clanContainer.addEventListener('click', function (e) {
+          // Ripple effect
+          const ripple = document.createElement('span');
+          ripple.classList.add('clan-ripple');
+          const rect = clanContainer.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+          ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+          clanContainer.appendChild(ripple);
+          ripple.addEventListener('animationend', () => ripple.remove());
+
+          // Open Discord invite after short delay
+          setTimeout(function () {
+            window.open('https://discord.com/invite/nhatremeogiat', '_blank', 'noopener,noreferrer');
+          }, 300);
+        });
+
+        // Tooltip hint
+        clanContainer.setAttribute('title', 'Tham gia Discord Clan!');
+      }
+    });
+  </script>
+
   <!-- Scripts -->
   <script src="./assets/js/error-handler.js"></script>
   <script src="./assets/js/console.js"></script>

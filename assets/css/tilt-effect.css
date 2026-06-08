@@ -1,11 +1,12 @@
 #blurred-box {
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
-              box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              box-shadow 1.2s cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
 }
 
-#blurred-box:hover {
+#blurred-box:hover,
+#blurred-box.auto-tilting {
   transform: translate(-50%, -50%) perspective(1000px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateZ(20px);
   box-shadow: 0 25px 50px rgba(0, 100, 255, 0.3);
 }
@@ -30,6 +31,7 @@
   border-radius: 20px;
 }
 
-#blurred-box:hover::after {
+#blurred-box:hover::after,
+#blurred-box.auto-tilting::after {
   opacity: 0.8;
 }

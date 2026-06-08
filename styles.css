@@ -600,6 +600,39 @@ img {
   padding: 4px 6px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+#discord-clan-container:hover {
+  background-color: rgba(88, 101, 242, 0.25);
+  border-color: rgba(88, 101, 242, 0.5);
+  box-shadow: 0 0 10px rgba(88, 101, 242, 0.4);
+  transform: scale(1.08);
+}
+
+#discord-clan-container:active {
+  transform: scale(0.95);
+  background-color: rgba(88, 101, 242, 0.45);
+  box-shadow: 0 0 16px rgba(88, 101, 242, 0.6);
+}
+
+#discord-clan-container .clan-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(88, 101, 242, 0.5);
+  transform: scale(0);
+  animation: clan-ripple-anim 0.5s linear;
+  pointer-events: none;
+}
+
+@keyframes clan-ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 #discord-clan-container img {

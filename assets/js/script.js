@@ -121,6 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize Lenis smooth scroll after page is scrollable
     initLenis();
+
+    // 🔔 Thông báo terminal đã xong để các module khác lắng nghe
+    window.dispatchEvent(new CustomEvent('terminalDone'));
   }
 
   // 🕒 Đồng hồ footer (Live clocks)
