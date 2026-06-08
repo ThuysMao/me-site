@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const albumArt = document.getElementById('discord-album-art');
 
   const syncIndicator = document.getElementById('discord-sync-indicator');
+  
+  const customStatusBubble = document.getElementById('custom-status-bubble');
+  const customStatusEmoji = document.getElementById('custom-status-emoji');
+  const customStatusText = document.getElementById('custom-status-text');
 
   function setText(el, value) {
     if (el) el.textContent = value || '';
@@ -243,6 +247,42 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  function updateCustomStatus(discord) {
+    if (!customStatusBubble) return;
+
+    const activities = discord.activities || [];
+    const customStatus = activities.find(a => a.type === 4 || a.id === 'custom');
+
+    if (customStatus && (customStatus.state || customStatus.emoji)) {
+      if (customStatus.emoji) {
+        let emojiUrl = '';
+        if (customStatus.emoji.id) {
+          const ext = customStatus.emoji.animated ? 'gif' : 'png';
+          emojiUrl = `https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}`;
+        }
+        
+        if (emojiUrl) {
+          customStatusEmoji.src = emojiUrl;
+          customStatusEmoji.classList.remove('custom-status-hidden');
+        } else {
+          customStatusEmoji.classList.add('custom-status-hidden');
+        }
+      } else {
+        customStatusEmoji.classList.add('custom-status-hidden');
+      }
+
+      let text = customStatus.state || '';
+      if (customStatus.emoji && !customStatus.emoji.id && customStatus.emoji.name) {
+        text = customStatus.emoji.name + ' ' + text;
+      }
+      
+      customStatusText.textContent = text;
+      customStatusBubble.classList.remove('custom-status-hidden');
+    } else {
+      customStatusBubble.classList.add('custom-status-hidden');
+    }
+  }
+
   async function updateDiscordStatus() {
     try {
       const response = await fetch(apiUrl, { cache: 'no-store' });
@@ -262,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       setStatus(discord.discord_status);
+      updateCustomStatus(discord);
 
       let rendered = false;
 

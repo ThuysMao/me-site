@@ -27,6 +27,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -81,6 +82,12 @@
     <div class="profile-picture-container">
       <img id="profile-picture" src="./assets/pfp/default.jpg" alt="ThuysMao Profile Picture">
       <div id="discord-sync-indicator" class="sync-indicator"><i class="fab fa-discord"></i></div>
+      
+      <!-- Custom Status Bubble -->
+      <div id="custom-status-bubble" class="custom-status-hidden">
+        <img id="custom-status-emoji" src="" alt="emoji" class="custom-status-hidden">
+        <span id="custom-status-text"></span>
+      </div>
     </div>
     <img id="avatar-frame" src="" alt="Avatar Frame">
 
@@ -388,9 +395,9 @@
   <!-- Discord Clan Click Handler -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const clanContainer = document.getElementById('discord-clan-container');
-      if (clanContainer) {
-        clanContainer.addEventListener('click', function (e) {
+      document.body.addEventListener('click', function (e) {
+        const clanContainer = e.target.closest('#discord-clan-container');
+        if (clanContainer) {
           // Ripple effect
           const ripple = document.createElement('span');
           ripple.classList.add('clan-ripple');
@@ -406,11 +413,8 @@
           setTimeout(function () {
             window.open('https://discord.com/invite/nhatremeogiat', '_blank', 'noopener,noreferrer');
           }, 300);
-        });
-
-        // Tooltip hint
-        clanContainer.setAttribute('title', 'Tham gia Discord Clan!');
-      }
+        }
+      });
     });
   </script>
 
