@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const t = (timestamp - autoStartTime) / 1000; // giây
 
     // Ease-in: tăng dần trong 2 giây đầu để khởi động mượt
-    const easeIn = Math.min(t / 2, 1);
+    const easeIn = Math.min(t / 4, 1);
 
     // Sine wave chậm, lệch pha → chuyển động tự nhiên, không đều
     const rotateX = MAX_TILT * easeIn * Math.sin(t * 0.12);
