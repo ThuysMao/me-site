@@ -1,10 +1,6 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&pause=1000&color=FF66CC&center=true&vCenter=true&width=435&lines=Hi+there!+I'm+ThuysMao+%E2%9C%A8;Medical+maid;Imperial+harem+member;Passionate+about+mysteries" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&pause=1000&color=FF66CC&center=true&vCenter=true&width=435&lines=Hi+there!+I'm+ThuysMao+%E2%9C%A8" alt="Typing SVG" />
 </h1>
-
-<div align="center">
-  <em>Medical maid, imperial harem member, passionate about medicine and mysteries. 🌿</em>
-</div>
 
 <br />
 
