@@ -10,7 +10,7 @@
   [![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
   <br />
-  <a href="https://profolio.blog/"><strong>➥ View Live Demo</strong></a>
+  <a href="https://profolio.blog/"><strong>➥ View Site</strong></a>
 </div>
 
 <br />
@@ -81,6 +81,12 @@ To run this project locally, you don't need any complex build tools. Just serve 
 │   ├── music/             # Audio tracks
 │   └── favico/            # Site icons
 ```
+
+## 💡 Ideas & Forks
+
+Have a cool idea to improve the UI, add new features, or just want to experiment with the code? **Please fork this repository!** 
+
+I highly encourage you to make your own version and implement your creative ideas. Once you're done, feel free to send me a message or a link to your fork. I would love to see what you come up with!
 
 ## 📫 Connect with Me
 
