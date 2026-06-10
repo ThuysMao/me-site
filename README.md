@@ -104,5 +104,5 @@ I highly encourage you to make your own version and implement your creative idea
 ---
 
 <div align="center">
-  <p>2026 THUYSMAO. Built from the ground up. All rights reserved.</p>
+  <p>2026 THUYSMAO. Built from the ground up. Rights Reserved</p>
 </div>
