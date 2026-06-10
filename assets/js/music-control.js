@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let previousVolume = 0.1;
     const defaultVolume = 0.2;
     let currentMediaIndex = -1;
+    let currentImageIndex = 0;
     let currentMode = 'music';
 
     const audio = document.getElementById('myAudio');
@@ -33,24 +34,22 @@ document.addEventListener('DOMContentLoaded', function () {
             audio: "./assets/music/Ariana Grande - bye [Altare Remix, slow].mp3",
             title: "bye [Altare Remix, slow]",
             artist: "Ariana Grande",
-            cover: "./assets/pfp/H.png",
+            cover: "./assets/pfp/H.jpg",
             link: "https://www.youtube.com/watch?v=agneRtEe-t8",
-            weight: 100
+            weight: 50
+        },
+        {
+            src: "./assets/pfp/H2.png",
+            audio: "./assets/music/Ariana Grande - bye [Altare Remix, slow].mp3",
+            title: "bye [Altare Remix, slow]",
+            artist: "Ariana Grande",
+            cover: "./assets/pfp/H2.jpg",
+            link: "https://www.youtube.com/watch?v=agneRtEe-t8",
+            weight: 50
         }
     ];
 
-    function getWeightedRandomItem(items) {
-        const totalWeight = items.reduce((sum, item) => sum + (item.weight || 1), 0);
-        const rand = Math.random() * totalWeight;
-        let cumulative = 0;
 
-        for (const item of items) {
-            cumulative += item.weight || 1;
-            if (rand <= cumulative) return item;
-        }
-
-        return items[items.length - 1];
-    }
 
     function updatePlayButton() {
         const icon = playPauseBtn.querySelector('i');
@@ -196,7 +195,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     randomBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        return;
+        if (currentMode === 'music') {
+            playRandomSong(true);
+        } else {
+            switchToImageMode();
+        }
     });
 
     function updateLocalMusicState(title, artist, cover, isPlaying, link) {
@@ -214,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
     audio.addEventListener('play', function () {
         isPlaying = true;
         updatePlayButton();
-        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[currentImageIndex];
         if (selected) {
             updateLocalMusicState(selected.title, selected.artist, selected.cover, true, selected.link);
         }
@@ -223,14 +226,18 @@ document.addEventListener('DOMContentLoaded', function () {
     audio.addEventListener('pause', function () {
         isPlaying = false;
         updatePlayButton();
-        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        const selected = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[currentImageIndex];
         if (selected) {
             updateLocalMusicState(selected.title, selected.artist, selected.cover, false, selected.link);
         }
     });
 
     audio.addEventListener('ended', function () {
-        playRandomSong(true);
+        if (currentMode === 'music') {
+            playRandomSong(true);
+        } else {
+            switchToImageMode();
+        }
     });
 
     window.startMusicWithRandom = function () {
@@ -256,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateMuteButton();
 
         // Initialize state on page load
-        const initialSong = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[0];
+        const initialSong = currentMode === 'music' ? mediaPairs[currentMediaIndex] : imageMedia[currentImageIndex];
         if (initialSong) {
             updateLocalMusicState(initialSong.title, initialSong.artist, initialSong.cover, isPlaying, initialSong.link);
         }
@@ -265,7 +272,27 @@ document.addEventListener('DOMContentLoaded', function () {
     function switchToImageMode() {
         currentMode = 'image';
 
-        const randomItem = getWeightedRandomItem(imageMedia);
+        let randomIndex;
+        do {
+            const totalWeight = imageMedia.reduce((sum, item) => sum + (item.weight || 1), 0);
+            const rand = Math.random() * totalWeight;
+            let cumulative = 0;
+            randomIndex = imageMedia.length - 1;
+
+            for (let i = 0; i < imageMedia.length; i++) {
+                cumulative += imageMedia[i].weight || 1;
+                if (rand <= cumulative) {
+                    randomIndex = i;
+                    break;
+                }
+            }
+        } while (
+            randomIndex === currentImageIndex &&
+            imageMedia.length > 1
+        );
+
+        currentImageIndex = randomIndex;
+        const randomItem = imageMedia[randomIndex];
 
         audio.pause();
         audio.innerHTML = "";
@@ -337,6 +364,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         toggleIcon.className = "fa-solid fa-video";
+
+        if (randomBtn) {
+            randomBtn.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                randomBtn.style.transform = 'scale(1)';
+            }, 150);
+        }
     }
 
     function switchToMusicMode() {
