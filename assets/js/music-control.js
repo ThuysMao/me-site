@@ -399,6 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     toggleIcon.addEventListener('click', function () {
+        return; // Tạm khóa tính năng
         if (currentMode === 'music') {
             switchToImageMode();
         } else {
@@ -411,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('media-toggle-buttons');
 
         if (toggleBtn) {
-            toggleBtn.style.display = 'block';
+            // toggleBtn.style.display = 'block'; // Tạm khóa hiển thị
         }
     };
 
