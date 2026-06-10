@@ -104,6 +104,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (skipButton) skipButton.style.display = 'none';
 
+    const githubLinkButton = document.getElementById('github-link-button');
+    if (githubLinkButton) {
+      githubLinkButton.style.display = 'block';
+      setTimeout(() => {
+        githubLinkButton.style.opacity = '1';
+      }, 50);
+    }
+
     const scrollContainer = document.getElementById('scroll-container');
     if (scrollContainer) {
       scrollContainer.style.display = 'inline-block';
