@@ -66,20 +66,27 @@ To run this project locally, you don't need any complex build tools. Just serve 
 ## 📁 File Structure Overview
 
 ```text
-├── index.html             # Main HTML structure
-├── styles.css             # Core CSS styling and animations
+├── .vscode/               # VS Code configurations
 ├── assets/
-│   ├── css/               # Additional stylesheets (tilt-effect, etc.)
-│   ├── js/                # JavaScript modules
-│   │   ├── script.js      # Main logic (Terminal, Initialization)
-│   │   ├── discord.js     # Lanyard API integration
-│   │   ├── music-control.js # Media player logic
-│   │   └── ...            # Other scripts (Tilt, Errors, etc.)
-│   ├── pfp/               # Profile pictures and gaming icons
-│   ├── badge/             # Discord badges
 │   ├── back/              # Background videos
+│   ├── badge/             # Discord & special badges
+│   ├── css/               # Additional stylesheets
+│   ├── cursor/            # Custom cursors
+│   ├── favico/            # Site icons and favicons
+│   ├── icon/              # Various UI icons
+│   ├── js/                # JavaScript modules
 │   ├── music/             # Audio tracks
-│   └── favico/            # Site icons
+│   └── pfp/               # Profile pictures and gaming icons
+├── .gitignore             # Git ignore rules
+├── .hintrc                # Hint configuration
+├── .htaccess              # Apache server configuration
+├── dmca.html              # DMCA protection page
+├── index.html             # Main HTML structure
+├── LICENSE                # Project license
+├── README.md              # Project documentation
+├── robots.txt             # Search engine crawler rules
+├── sitemap.xml            # Website sitemap for SEO
+└── styles.css             # Core CSS styling and animations
 ```
 
 ## 💡 Ideas & Forks
@@ -97,6 +104,5 @@ I highly encourage you to make your own version and implement your creative idea
 ---
 
 <div align="center">
-  <p>Built from the ground up with passion and curiosity. 🐈‍⬛</p>
-  <p>&copy; 2026 THUYSMAO. All rights reserved.</p>
+  <p>2026 THUYSMAO. Built from the ground up. All rights reserved.</p>
 </div>
