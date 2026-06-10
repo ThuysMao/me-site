@@ -5,15 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const avatarFrame = document.getElementById('avatar-frame');
 
     const renderClan = (clanData) => {
-        const blurredBox = document.getElementById('blurred-box');
-        if (!blurredBox) return;
+        const nameWrapper = document.querySelector('.discord-name-wrapper');
+        if (!nameWrapper) return;
         
         let clanContainer = document.getElementById('discord-clan-container');
         if (!clanContainer) {
             clanContainer = document.createElement('div');
             clanContainer.id = 'discord-clan-container';
             clanContainer.setAttribute('title', 'Tham gia Discord Clan!');
-            blurredBox.appendChild(clanContainer);
+            nameWrapper.appendChild(clanContainer);
         }
 
         // Clan Badge Image

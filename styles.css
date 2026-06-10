@@ -436,7 +436,8 @@ img {
   }
 }
 
-#username, #typing-cursor {
+#username,
+#typing-cursor {
   --custom-neon-shadow-radius: calc(4px + 0.12em);
   --custom-display-name-styles-main-color: #ff3377;
   paint-order: stroke fill;
@@ -506,12 +507,18 @@ img {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
+.discord-meta .discord-name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  bottom: -7px;
+}
+
 .discord-meta b {
   font-size: 20px;
   display: block;
   font-weight: 600;
-  position: relative;
-  bottom: -7px;
 }
 
 .discord-meta span,
@@ -531,7 +538,7 @@ img {
   border-radius: 50%;
   display: inline-block;
   margin-right: 2px;
-  margin-left: -110px;
+  margin-left: -190px;
   margin-bottom: 3px;
   margin-top: 10px;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
@@ -675,9 +682,7 @@ img {
 }
 
 #discord-clan-container {
-  position: absolute;
-  top: 252px;
-  left: 150px;
+  position: relative;
   display: flex;
   align-items: center;
   gap: 4px;
