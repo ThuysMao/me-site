@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             src: "./assets/pfp/H2.png",
-            audio: "./assets/music/Ariana Grande - bye [Altare Remix, slow].mp3",
-            title: "bye [Altare Remix, slow]",
-            artist: "Ariana Grande",
+            audio: "./assets/music/sonido original - Im What Remains.mp3",
+            title: "sonido original",
+            artist: "Im What Remains",
             cover: "./assets/pfp/H2.jpg",
-            link: "https://www.youtube.com/watch?v=agneRtEe-t8",
+            link: "https://www.tiktok.com/music/sonido-original-7457322053037869830",
             weight: 50
         }
     ];
