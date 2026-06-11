@@ -10,6 +10,28 @@ html::-webkit-scrollbar {
   height: 0;
 }
 
+/* Lenis Recommended CSS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -1002,13 +1024,16 @@ marquee {
   display: inline-block;
 }
 
+#scroll-container a {
+  color: white;
+}
+
 a {
   font-size: 16px;
   text-transform: lowercase;
   text-decoration: none;
   text-align: center;
   font-family: 'consolas', sans-serif;
-  animation: colorRotate 0.5s linear 0s infinite;
   display: inline-block;
   margin: 0 10px;
 }
@@ -1999,13 +2024,16 @@ body {
   color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
 }
+
 .site-footer.dark-theme .footer-logo {
   color: rgba(255, 255, 255, 0.9);
 }
+
 .site-footer.dark-theme .footer-col h4 {
   color: rgba(255, 255, 255, 0.9);
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
+
 .site-footer.dark-theme .footer-description,
 .site-footer.dark-theme .footer-links li,
 .site-footer.dark-theme .footer-list li,
@@ -2015,33 +2043,42 @@ body {
 .site-footer.dark-theme .timezone-time {
   color: rgba(255, 255, 255, 0.7) !important;
 }
+
 .site-footer.dark-theme a {
   color: rgba(255, 255, 255, 0.7) !important;
   border-bottom: none !important;
 }
+
 .site-footer.dark-theme a span {
   border-bottom-color: transparent !important;
 }
+
 .site-footer.dark-theme a:hover span {
   border-bottom-color: rgba(255, 255, 255, 0.1) !important;
 }
+
 .site-footer.dark-theme .footer-bottom {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
+
 .site-footer.dark-theme .footer-bottom p {
   color: rgba(255, 255, 255, 0.6);
 }
+
 .site-footer.dark-theme .music-title {
   color: rgba(255, 255, 255, 0.9);
 }
+
 .site-footer.dark-theme .music-artist {
   color: rgba(255, 255, 255, 0.7);
 }
+
 .site-footer.dark-theme .theme-toggle-btn {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.9);
 }
+
 .site-footer.dark-theme .theme-toggle-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -2054,4 +2091,4 @@ body {
     height: 35px;
     font-size: 16px;
   }
-}
+}
