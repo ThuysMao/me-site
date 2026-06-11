@@ -87,50 +87,95 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 🎯 Khi skip hoặc terminal kết thúc
   function handleInput() {
+    if (skipButton) {
+      skipButton.style.transition = 'opacity 0.4s ease';
+      skipButton.style.opacity = '0';
+    }
+
     const particlesBg = document.getElementById('particles-js');
+    if (particlesBg) {
+      particlesBg.style.transition = 'opacity 0.5s ease';
+      particlesBg.style.opacity = '0';
+    }
 
-    if (particlesBg) particlesBg.style.display = 'none';
-    terminalContainer.style.display = 'none';
-
-    if (window.startMusicWithRandom) window.startMusicWithRandom();
-    if (window.showMediaToggle) window.showMediaToggle();
-
-    blurredBox.style.display = 'block';
-    document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass');
-    document.body.classList.add('allow-scroll');
-    blurredBox.classList.add('theme-ready');
+    terminalContainer.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    terminalContainer.style.opacity = '0';
+    terminalContainer.style.transform = 'scale(0.95)';
 
     removeEventListeners();
 
-    if (skipButton) skipButton.style.display = 'none';
+    setTimeout(() => {
+      if (particlesBg) particlesBg.style.display = 'none';
+      terminalContainer.style.display = 'none';
+      if (skipButton) skipButton.style.display = 'none';
+      
+      showMainUI();
+    }, 700);
+  }
+
+  function showMainUI() {
+    if (window.startMusicWithRandom) window.startMusicWithRandom();
+    if (window.showMediaToggle) window.showMediaToggle();
+
+    document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass');
+    document.body.classList.add('allow-scroll');
+
+    // Fade in mượt mà cho blurredBox
+    blurredBox.style.opacity = '0';
+    blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.95)';
+    blurredBox.style.display = 'block';
+    
+    // Force reflow
+    void blurredBox.offsetWidth;
+
+    blurredBox.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    blurredBox.style.opacity = '1';
+    blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(1)';
+    blurredBox.classList.add('theme-ready');
+
+    // Remove inline transform and transition after animation completes
+    // so it doesn't conflict with tilt-effect.js
+    setTimeout(() => {
+      blurredBox.style.transition = '';
+      blurredBox.style.transform = '';
+    }, 800);
 
     const githubLinkButton = document.getElementById('github-link-button');
     if (githubLinkButton) {
+      githubLinkButton.style.opacity = '0';
       githubLinkButton.style.display = 'block';
       setTimeout(() => {
+        githubLinkButton.style.transition = 'opacity 1s ease';
         githubLinkButton.style.opacity = '1';
-      }, 50);
+      }, 200);
     }
 
     const scrollContainer = document.getElementById('scroll-container');
     if (scrollContainer) {
+      scrollContainer.style.opacity = '0';
       scrollContainer.style.display = 'inline-block';
-      const marquee = scrollContainer.querySelector('marquee');
-      if (marquee && typeof marquee.start === 'function') {
-        marquee.stop();
-        setTimeout(() => marquee.start(), 50);
-      }
+      setTimeout(() => {
+        scrollContainer.style.transition = 'opacity 1s ease';
+        scrollContainer.style.opacity = '1';
+        const marquee = scrollContainer.querySelector('marquee');
+        if (marquee && typeof marquee.start === 'function') {
+          marquee.stop();
+          setTimeout(() => marquee.start(), 50);
+        }
+      }, 200);
     }
 
-    if (links) links.classList.add('links--visible');
+    if (links) {
+      links.style.opacity = '0';
+      links.classList.add('links--visible');
+      setTimeout(() => {
+        links.style.transition = 'opacity 1s ease';
+        links.style.opacity = '1';
+      }, 200);
+    }
 
-    // Initialize the clocks for footer
     initFooterClocks();
-
-    // Initialize Lenis smooth scroll after page is scrollable
     initLenis();
-
-    // 🔔 Thông báo terminal đã xong để các module khác lắng nghe
     window.dispatchEvent(new CustomEvent('terminalDone'));
   }
 
@@ -164,19 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
   function stopTerminal() {
     skipTriggered = true;
     if (typingTimeout) clearTimeout(typingTimeout);
-
-    terminalContainer.style.transition = 'opacity 0.5s ease';
-    terminalContainer.style.opacity = '0';
-    setTimeout(() => {
-      terminalContainer.style.display = 'none';
-    }, 500);
-
-    skipButton.style.transition = 'opacity 0.4s ease';
-    skipButton.style.opacity = '0';
-    setTimeout(() => {
-      skipButton.style.display = 'none';
-    }, 400);
-
     handleInput();
   }
 
@@ -345,7 +377,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const lenis = new Lenis({
       lerp: 0.1,
-      smoothWheel: true
+      smoothWheel: true,
+      smoothTouch: true,
+      syncTouch: true,
+      normalizeWheel: true
     });
 
     const dotScrollbar = document.querySelector('.dot-scrollbar');
