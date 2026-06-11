@@ -381,4 +381,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     requestAnimationFrame(raf);
   }
+
+  // 🌙 Footer Theme Toggle
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  const themeIcon = document.getElementById('theme-icon');
+  const siteFooter = document.querySelector('.site-footer');
+  
+  if (themeToggleBtn && siteFooter) {
+    const savedTheme = localStorage.getItem('footer-theme');
+    if (savedTheme === 'dark') {
+      siteFooter.classList.add('dark-theme');
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      siteFooter.classList.toggle('dark-theme');
+      const isDark = siteFooter.classList.contains('dark-theme');
+      
+      if (isDark) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('footer-theme', 'dark');
+      } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('footer-theme', 'light');
+      }
+    });
+  }
+
 });
