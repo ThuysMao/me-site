@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.user.banner) {
                     const ext = data.user.banner.startsWith('a_') ? 'gif' : 'png';
                     profileBanner.style.backgroundImage = `url('https://cdn.discordapp.com/banners/${data.user.id}/${data.user.banner}.${ext}?size=480')`;
-                } else if (data.user.banner_color) {
-                    profileBanner.style.backgroundColor = data.user.banner_color;
+                } else {
+                    profileBanner.style.backgroundImage = `url('assets/pfp/stupidcat.png')`;
                 }
             }
 
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fallback banner color or generic error handling
             const profileBanner = document.getElementById('profile-banner');
             if (profileBanner && !profileBanner.style.backgroundImage) {
-                profileBanner.style.backgroundColor = "#f08c55"; // Default banner color from JSON
+                profileBanner.style.backgroundImage = `url('assets/pfp/stupidcat.png')`;
             }
 
             // Render clan tag anyway
