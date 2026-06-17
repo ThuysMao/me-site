@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     "[SYNC] Connecting Discord presence...",
     "[SYNC] Loading media engine...",
     "[OK] All systems online.",
-    "Press Enter or click to continue..."
+    "System ready. Drag me around or click Red [X] to close."
   ];
   let currentIndex = 0;
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
           typeWriter();
         } else {
           isTerminalDone = true;
-          addEventListeners();
+          handleInput(); // Auto load UI when boot completes, but keep terminal
         }
       }
     }
@@ -86,31 +86,42 @@ document.addEventListener('DOMContentLoaded', function () {
   //}
 
   // 🎯 Khi skip hoặc terminal kết thúc
+  window.mainUILoaded = false;
+
   function handleInput() {
+    if (window.mainUILoaded) return;
+    window.mainUILoaded = true;
+
     if (skipButton) {
       skipButton.style.transition = 'opacity 0.4s ease';
       skipButton.style.opacity = '0';
+      setTimeout(() => skipButton.style.display = 'none', 400);
     }
 
     const particlesBg = document.getElementById('particles-js');
     if (particlesBg) {
       particlesBg.style.transition = 'opacity 0.5s ease';
       particlesBg.style.opacity = '0';
+      setTimeout(() => particlesBg.style.display = 'none', 500);
     }
 
-    terminalContainer.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-    terminalContainer.style.opacity = '0';
-    terminalContainer.style.transform = 'scale(0.95)';
-
+    hideTerminal();
     removeEventListeners();
+    showMainUI();
+  }
 
-    setTimeout(() => {
-      if (particlesBg) particlesBg.style.display = 'none';
-      terminalContainer.style.display = 'none';
-      if (skipButton) skipButton.style.display = 'none';
-      
-      showMainUI();
-    }, 700);
+  function hideTerminal() {
+    terminalContainer.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    terminalContainer.style.opacity = '0';
+    terminalContainer.style.transform = 'scale(0.9)';
+    setTimeout(() => terminalContainer.style.display = 'none', 400);
+  }
+
+  function stopTerminalAndHide() {
+    skipTriggered = true;
+    if (typingTimeout) clearTimeout(typingTimeout);
+    hideTerminal();
+    handleInput();
   }
 
   function showMainUI() {
@@ -205,22 +216,17 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateFooterClocks, 1000);
   }
 
-  // 🎬 Khi ấn Skip
-  function stopTerminal() {
-    skipTriggered = true;
-    if (typingTimeout) clearTimeout(typingTimeout);
-    handleInput();
-  }
+  // 🎯 Khi skip bằng nút "Bỏ qua"
+  if (skipButton) skipButton.addEventListener('click', stopTerminalAndHide);
 
-  // 🎯 Gán sự kiện Skip
-  if (skipButton) skipButton.addEventListener('click', stopTerminal);
-
-  // ⌨️ Khi nhấn Enter hoặc click sau khi terminal xong
   function handleKeyPress(event) {
-    if (event.key === 'Enter' && isTerminalDone) handleInput();
+    if (event.key === 'Enter' && isTerminalDone) stopTerminalAndHide();
   }
-  function handleClick() {
-    if (isTerminalDone) handleInput();
+  function handleClick(e) {
+    // Chỉ click ra ngoài terminal mới ẩn, để chừa cho tương tác cửa sổ
+    if (isTerminalDone && !terminalContainer.contains(e.target)) {
+       stopTerminalAndHide();
+    }
   }
   function addEventListeners() {
     document.addEventListener('click', handleClick);
@@ -229,6 +235,103 @@ document.addEventListener('DOMContentLoaded', function () {
   function removeEventListeners() {
     document.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleKeyPress);
+  }
+
+  // --- OS WINDOW LOGIC (DRAG & BUTTONS) ---
+  const terminalHeader = document.getElementById('terminal-header');
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  if (terminalHeader) {
+    terminalHeader.style.cursor = 'grab';
+    terminalHeader.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      const rect = terminalContainer.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      terminalHeader.style.cursor = 'grabbing';
+      
+      // Hủy center bằng transform để drag mượt
+      if (!terminalContainer.style.transform || terminalContainer.style.transform !== 'none') {
+        terminalContainer.style.left = rect.left + 'px';
+        terminalContainer.style.top = rect.top + 'px';
+        terminalContainer.style.transform = 'none';
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      terminalContainer.style.left = (e.clientX - offsetX) + 'px';
+      terminalContainer.style.top = (e.clientY - offsetY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        terminalHeader.style.cursor = 'grab';
+      }
+    });
+  }
+
+  const maximizeBtn = document.getElementById('maximize-button');
+  const minimizeBtn = document.getElementById('minimize-button');
+  const closeBtn = document.getElementById('close-button');
+
+  let isMaximized = false;
+  let preMaxStyles = { left: '', top: '', width: '', height: '', transform: '' };
+
+  if (maximizeBtn) {
+    maximizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!isMaximized) {
+        preMaxStyles.left = terminalContainer.style.left;
+        preMaxStyles.top = terminalContainer.style.top;
+        preMaxStyles.width = terminalContainer.style.width;
+        preMaxStyles.height = terminalContainer.style.height;
+        preMaxStyles.transform = terminalContainer.style.transform;
+        
+        terminalContainer.style.transition = 'all 0.3s ease';
+        terminalContainer.style.left = '0';
+        terminalContainer.style.top = '0';
+        terminalContainer.style.width = '100vw';
+        terminalContainer.style.height = '100vh';
+        terminalContainer.style.transform = 'none';
+        isMaximized = true;
+      } else {
+        terminalContainer.style.left = preMaxStyles.left || '50%';
+        terminalContainer.style.top = preMaxStyles.top || '50%';
+        terminalContainer.style.width = preMaxStyles.width || '650px';
+        terminalContainer.style.height = preMaxStyles.height || '450px';
+        terminalContainer.style.transform = preMaxStyles.transform || 'translate(-50%, -50%)';
+        isMaximized = false;
+      }
+      setTimeout(() => terminalContainer.style.transition = '', 300);
+    });
+  }
+
+  let isMinimized = false;
+  if (minimizeBtn) {
+    minimizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const content = document.getElementById('terminal-content');
+      if (!isMinimized) {
+        content.style.display = 'none';
+        terminalContainer.style.transition = 'height 0.3s ease';
+        terminalContainer.style.height = '48px'; 
+        isMinimized = true;
+      } else {
+        terminalContainer.style.height = '450px';
+        setTimeout(() => content.style.display = 'block', 300);
+        isMinimized = false;
+      }
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stopTerminalAndHide();
+    });
   }
 
   // 🧩 Lấy IP
@@ -244,52 +347,71 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
   // 🖥️ Hệ điều hành
-  const userAgent = navigator.userAgent;
-  function getOperatingSystem() {
-    if (userAgent.match(/Windows/)) return getWindowsVersion();
-    if (userAgent.match(/Macintosh/)) return getMacOSVersion();
-    if (userAgent.match(/Linux/)) return "Linux";
-    if (userAgent.match(/Android/)) return getAndroidVersion();
-    if (userAgent.match(/iPhone|iPad|iPod/)) return getiOSVersion();
-    return "Unknown";
-  }
-
-  function getWindowsVersion() {
-    const version = userAgent.match(/Windows NT ([\d.]+)/);
-    if (!version) return "Windows";
-    switch (version[1]) {
-      case "5.1": return "Windows XP";
-      case "6.0": return "Windows Vista";
-      case "6.1": return "Windows 7";
-      case "6.2": return "Windows 8";
-      case "6.3": return "Windows 8.1";
-      case "10.0": return "Windows 10";
-      default: return "Windows";
+  async function detectOS() {
+    let osName = "Unknown OS";
+    
+    // Sử dụng Client Hints API (giúp phân biệt Win 10 và Win 11 chính xác)
+    if (navigator.userAgentData) {
+      try {
+        const ua = await navigator.userAgentData.getHighEntropyValues(["platform", "platformVersion"]);
+        if (ua.platform === "Windows") {
+          const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0], 10);
+          if (majorPlatformVersion >= 13) {
+            return "Windows 11";
+          } else if (majorPlatformVersion > 0) {
+            return "Windows 10";
+          }
+          return "Windows";
+        } else if (ua.platform === "macOS") {
+          return "macOS";
+        } else if (ua.platform) {
+          return ua.platform;
+        }
+      } catch (e) {
+        console.error("userAgentData error:", e);
+      }
     }
-  }
-  function getMacOSVersion() {
-    const version = userAgent.match(/Mac OS X ([\d_]+)/);
-    return version ? "macOS " + version[1].replace(/_/g, '.') : "macOS";
-  }
-  function getAndroidVersion() {
-    const version = userAgent.match(/Android ([\d.]+)/);
-    return version ? "Android " + version[1] : "Android";
-  }
-  function getiOSVersion() {
-    const version = userAgent.match(/OS ([\d_]+)/);
-    return version ? "iOS " + version[1].replace(/_/g, '.') : "iOS";
+    
+    // Fallback cho trình duyệt không hỗ trợ userAgentData (Safari, Firefox)
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Mac") !== -1) {
+      const version = userAgent.match(/Mac OS X ([\d_]+)/);
+      return version ? "macOS " + version[1].replace(/_/g, '.') : "macOS";
+    } else if (userAgent.indexOf("Win") !== -1) {
+      const version = userAgent.match(/Windows NT ([\d.]+)/);
+      if (version) {
+        if (version[1] === "10.0") return "Windows 10/11"; 
+        if (version[1] === "6.3") return "Windows 8.1";
+        if (version[1] === "6.2") return "Windows 8";
+        if (version[1] === "6.1") return "Windows 7";
+      }
+      return "Windows";
+    } else if (userAgent.indexOf("Linux") !== -1) {
+      if (userAgent.indexOf("Android") !== -1) {
+        const version = userAgent.match(/Android ([\d.]+)/);
+        return version ? "Android " + version[1] : "Android";
+      }
+      return "Linux";
+    } else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) {
+      const version = userAgent.match(/OS ([\d_]+)/);
+      return version ? "iOS " + version[1].replace(/_/g, '.') : "iOS";
+    }
+    
+    return osName;
   }
 
+  terminalTextContent[2] = "System: Detecting...";
+  detectOS().then(os => {
+    terminalTextContent[2] = "System: " + os;
+  });
 
-  terminalTextContent[2] = "System: " + getOperatingSystem();
-
-  // 📐 Căn giữa terminal
+  // 📐 Căn giữa terminal ban đầu
   function centerTerminal() {
-    const w = terminalContainer.offsetWidth;
-    const h = terminalContainer.offsetHeight;
+    if (isDragging || isMaximized) return; // Không can thiệp nếu user đã kéo hoặc phóng to
     terminalContainer.style.position = 'absolute';
-    terminalContainer.style.left = ((window.innerWidth - w) / 2) + 'px';
-    terminalContainer.style.top = ((window.innerHeight - h) / 2) + 'px';
+    terminalContainer.style.left = '50%';
+    terminalContainer.style.top = '50%';
+    terminalContainer.style.transform = 'translate(-50%, -50%)';
   }
   centerTerminal();
   window.addEventListener('resize', centerTerminal);
@@ -329,18 +451,18 @@ document.addEventListener('DOMContentLoaded', function () {
   function initParticles() {
     particlesJS("particles-js", {
       particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
+        number: { value: 50, density: { enable: true, value_area: 1000 } },
         color: { value: "#ffffff" },
         shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
-        opacity: { value: 0.5 },
-        size: { value: 3, random: true },
-        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-        move: { enable: true, speed: 2, direction: "none", out_mode: "out" }
+        opacity: { value: 0.7, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.3, sync: false } },
+        size: { value: 4, random: true, anim: { enable: true, speed: 1, size_min: 1.5, sync: false } },
+        line_linked: { enable: true, distance: 140, color: "#ffffff", opacity: 0.35, width: 1.5 },
+        move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
       },
       interactivity: {
         detect_on: "canvas",
-        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
-        modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+        events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
+        modes: { grab: { distance: 140, line_linked: { opacity: 0.3 } }, push: { particles_nb: 3 } }
       },
       retina_detect: true
     });
