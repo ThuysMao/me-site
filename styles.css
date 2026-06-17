@@ -1705,6 +1705,24 @@ body.allow-scroll .site-footer {
   color: #000000;
   margin: 0;
   letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo img {
+  width: 30%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-left: -27px;
+}
+
+.footer-logo .logo-light-theme {
+  display: block;
+}
+
+.footer-logo .logo-dark-theme {
+  display: none;
 }
 
 .footer-description {
@@ -2027,6 +2045,14 @@ body {
 
 .site-footer.dark-theme .footer-logo {
   color: rgba(255, 255, 255, 0.9);
+}
+
+.site-footer.dark-theme .footer-logo .logo-light-theme {
+  display: none;
+}
+
+.site-footer.dark-theme .footer-logo .logo-dark-theme {
+  display: block;
 }
 
 .site-footer.dark-theme .footer-col h4 {
