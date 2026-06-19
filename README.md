@@ -99,7 +99,7 @@ I highly encourage you to make your own version and implement your creative idea
 
 - **Discord**: [@thuysmao](https://discord.com/users/985537688159522847)
 - **Steam**: [Main Account](https://steamcommunity.com/profiles/76561199881574505)
-- **Email**: [nguyenduy0123123@gmail.com](mailto:nguyenduy0123123@gmail.com)
+- **Email**: [](mailto:nguyenduy0123123@gmail.com)
 
 ---
 
