@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     "[SYNC] Connecting Discord presence...",
     "[SYNC] Loading media engine...",
     "[OK] All systems online.",
-    "System ready. Drag me around or click Red [X] to close."
+    "Press any key or click anywhere to continue..."
   ];
   let currentIndex = 0;
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
           typeWriter();
         } else {
           isTerminalDone = true;
-          handleInput(); // Auto load UI when boot completes, but keep terminal
+          // Wait for user click or keypress to close the terminal and proceed
         }
       }
     }
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     blurredBox.style.opacity = '0';
     blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.95)';
     blurredBox.style.display = 'block';
-    
+
     // Force reflow
     void blurredBox.offsetWidth;
 
@@ -220,12 +220,15 @@ document.addEventListener('DOMContentLoaded', function () {
   if (skipButton) skipButton.addEventListener('click', stopTerminalAndHide);
 
   function handleKeyPress(event) {
-    if (event.key === 'Enter' && isTerminalDone) stopTerminalAndHide();
+    if (isTerminalDone) stopTerminalAndHide();
   }
   function handleClick(e) {
-    // Chỉ click ra ngoài terminal mới ẩn, để chừa cho tương tác cửa sổ
-    if (isTerminalDone && !terminalContainer.contains(e.target)) {
-       stopTerminalAndHide();
+    if (isTerminalDone) {
+      // Don't close if clicking on minimize/maximize buttons
+      if (e.target.closest('#minimize-button') || e.target.closest('#maximize-button')) {
+        return;
+      }
+      stopTerminalAndHide();
     }
   }
   function addEventListeners() {
@@ -236,6 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleKeyPress);
   }
+
+  // Register event listeners to handle terminal close on click or keypress
+  addEventListeners();
 
   // --- OS WINDOW LOGIC (DRAG & BUTTONS) ---
   const terminalHeader = document.getElementById('terminal-header');
@@ -250,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
       offsetX = e.clientX - rect.left;
       offsetY = e.clientY - rect.top;
       terminalHeader.style.cursor = 'grabbing';
-      
+
       // Hủy center bằng transform để drag mượt
       if (!terminalContainer.style.transform || terminalContainer.style.transform !== 'none') {
         terminalContainer.style.left = rect.left + 'px';
@@ -289,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
         preMaxStyles.width = terminalContainer.style.width;
         preMaxStyles.height = terminalContainer.style.height;
         preMaxStyles.transform = terminalContainer.style.transform;
-        
+
         terminalContainer.style.transition = 'all 0.3s ease';
         terminalContainer.style.left = '0';
         terminalContainer.style.top = '0';
@@ -317,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!isMinimized) {
         content.style.display = 'none';
         terminalContainer.style.transition = 'height 0.3s ease';
-        terminalContainer.style.height = '48px'; 
+        terminalContainer.style.height = '48px';
         isMinimized = true;
       } else {
         terminalContainer.style.height = '450px';
@@ -349,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 🖥️ Hệ điều hành
   async function detectOS() {
     let osName = "Unknown OS";
-    
+
     // Sử dụng Client Hints API (giúp phân biệt Win 10 và Win 11 chính xác)
     if (navigator.userAgentData) {
       try {
@@ -371,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("userAgentData error:", e);
       }
     }
-    
+
     // Fallback cho trình duyệt không hỗ trợ userAgentData (Safari, Firefox)
     const userAgent = navigator.userAgent;
     if (userAgent.indexOf("Mac") !== -1) {
@@ -380,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (userAgent.indexOf("Win") !== -1) {
       const version = userAgent.match(/Windows NT ([\d.]+)/);
       if (version) {
-        if (version[1] === "10.0") return "Windows 10/11"; 
+        if (version[1] === "10.0") return "Windows 10/11";
         if (version[1] === "6.3") return "Windows 8.1";
         if (version[1] === "6.2") return "Windows 8";
         if (version[1] === "6.1") return "Windows 7";
@@ -396,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const version = userAgent.match(/OS ([\d_]+)/);
       return version ? "iOS " + version[1].replace(/_/g, '.') : "iOS";
     }
-    
+
     return osName;
   }
 
@@ -543,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeIcon = document.getElementById('theme-icon');
   const siteFooter = document.querySelector('.site-footer');
-  
+
   if (themeToggleBtn && siteFooter) {
     const savedTheme = localStorage.getItem('footer-theme');
     if (savedTheme === 'dark') {
@@ -555,7 +561,7 @@ document.addEventListener('DOMContentLoaded', function () {
     themeToggleBtn.addEventListener('click', () => {
       siteFooter.classList.toggle('dark-theme');
       const isDark = siteFooter.classList.contains('dark-theme');
-      
+
       if (isDark) {
         themeIcon.classList.remove('fa-moon');
         themeIcon.classList.add('fa-sun');
