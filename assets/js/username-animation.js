@@ -131,28 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 800);
     }
 
-    /**
-     * Add keyboard sound effect simulation
-     */
-    function playTypingSound() {
-        // Create a subtle typing sound using Web Audio API
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.01, audioContext.currentTime);
-
-            oscillator.start();
-            oscillator.stop(audioContext.currentTime + 0.05);
-        } catch (e) {
-            // Silent fallback if Web Audio API is not supported
-        }
-    }
 
     /**
      * Pause/Resume animation (useful for performance)
