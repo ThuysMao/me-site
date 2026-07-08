@@ -21,6 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const customStatusEmoji = document.getElementById('custom-status-emoji');
   const customStatusText = document.getElementById('custom-status-text');
 
+  const activityLargeText = document.getElementById('discord-activity-large-text');
+  const activitySmallText = document.getElementById('discord-activity-small-text');
+  const activityTime = document.getElementById('discord-activity-time');
+  let activityTimerInterval = null;
+
+  function formatTimeElapsed(startMs) {
+    const totalSeconds = Math.max(0, Math.floor((Date.now() - startMs) / 1000));
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    if (h > 0) {
+      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+
   function setText(el, value) {
     if (el) el.textContent = value || '';
   }
@@ -41,6 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function showNoActivity() {
     if (activityInfo) activityInfo.classList.add('hidden');
     if (noActivity) noActivity.classList.remove('hidden');
+    if (activityTimerInterval) {
+      clearInterval(activityTimerInterval);
+      activityTimerInterval = null;
+    }
   }
 
   function clearAlbumArt() {
@@ -211,6 +231,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setText(activityName, spotify.song || 'Spotify');
     setText(activityDetails, spotify.artist || '');
     setText(activityState, spotify.album || '');
+    setText(activityLargeText, '');
+    setText(activitySmallText, '');
+    setText(activityTime, '');
+    if (activityTimerInterval) {
+      clearInterval(activityTimerInterval);
+      activityTimerInterval = null;
+    }
 
     if (spotify.album_art_url) {
       setAlbumArt(spotify.album_art_url, 'spotify');
@@ -229,6 +256,34 @@ document.addEventListener('DOMContentLoaded', () => {
     setText(activityName, activity.name || 'Unknown Activity');
     setText(activityDetails, activity.details || '');
     setText(activityState, activity.state || '');
+
+    if (activity.assets?.large_text) {
+      activityLargeText.innerHTML = `<i class="fa-solid fa-circle-info" style="font-size: 11px; margin-right: 2px;"></i> ${activity.assets.large_text}`;
+    } else {
+      activityLargeText.innerHTML = '';
+    }
+
+    if (activity.assets?.small_text) {
+      activitySmallText.innerHTML = `<i class="fa-solid fa-comment-dots" style="font-size: 11px; margin-right: 2px;"></i> ${activity.assets.small_text}`;
+    } else {
+      activitySmallText.innerHTML = '';
+    }
+
+    if (activityTimerInterval) {
+      clearInterval(activityTimerInterval);
+      activityTimerInterval = null;
+    }
+    
+    if (activity.timestamps && activity.timestamps.start) {
+      const startMs = activity.timestamps.start;
+      activityTime.innerHTML = `<i class="fa-solid fa-gamepad"></i> ${formatTimeElapsed(startMs)}`;
+      
+      activityTimerInterval = setInterval(() => {
+        activityTime.innerHTML = `<i class="fa-solid fa-gamepad"></i> ${formatTimeElapsed(startMs)}`;
+      }, 1000);
+    } else {
+      activityTime.innerHTML = '';
+    }
 
     const imageUrl = getBestDiscordImage(activity);
 

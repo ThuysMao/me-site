@@ -134,13 +134,12 @@ img {
 #terminal-text {
   margin-top: 20px;
   padding: 0;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.5;
   overflow: hidden;
   white-space: pre-line;
-  font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
-  color: #ff3377;
-  text-shadow: 0 0 12px rgba(255, 51, 119, 0.5);
+  font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+  color: #E0E0E0;
 }
 
 #myVideo {
@@ -641,6 +640,25 @@ img {
   justify-content: center;
   min-width: 0;
   flex: 1;
+  text-align: left;
+}
+
+.activity-time {
+  color: #23a559;
+  font-weight: 500;
+  font-size: 13px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activity-extra {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 #discord-activity-name {

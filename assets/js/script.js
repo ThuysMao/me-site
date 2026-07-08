@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 🎨 ASCII
   function getAsciiArt() {
     return `
-          LOADING...      
+           
   `;
   }
 
