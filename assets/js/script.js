@@ -15,53 +15,62 @@ document.addEventListener('DOMContentLoaded', function () {
   if (links) links.classList.remove('links--visible');
   if (blurredBox) blurredBox.style.display = 'none';
 
-  const terminalTextContent = [
-    "[BOOT] Initializing...",
-    "[BOOT] Loading profile core...",
-    "IP: Loading...",
-    "[SYNC] Connecting Discord presence...",
-    "[SYNC] Loading media engine...",
-    "[OK] All systems online.",
-    "Press any key or click anywhere to continue..."
+  const gameBadges = document.querySelectorAll('.faceit, .valorant, .csgo');
+  gameBadges.forEach(el => {
+    el.style.display = 'none';
+    el.style.opacity = '0';
+  });
+
+  const poemLines = [
+    "…Dẫu sấm không vang dội",
+    "dù mưa chẳng tuôn rơi…",
+    "Chỉ cần em mong muốn",
+    "thì ta sẽ chẳng rời."
   ];
-  let currentIndex = 0;
+  let poemLineIndex = 0;
 
   videoBackground.pause();
   audioBackground.pause();
 
-  // 🧠 Gõ text từng dòng
+  // 🧠 Gõ 4 câu thơ từng dòng cố định vị trí
   function typeWriter() {
     if (skipTriggered) return;
-    const line = currentIndex === 0 ? getAsciiArt() : terminalTextContent[currentIndex - 1];
+    if (poemLineIndex >= poemLines.length) {
+      isTerminalDone = true;
+      setTimeout(() => {
+        if (!skipTriggered) stopTerminalAndHide();
+      }, 1200);
+      return;
+    }
+
+    const line = poemLines[poemLineIndex];
+    const targetEl = document.getElementById(`line-${poemLineIndex}`) || terminalText;
     let i = 0;
 
     function typeChar() {
       if (skipTriggered) return;
       if (i < line.length) {
-        terminalText.textContent += line.charAt(i);
+        targetEl.textContent += line.charAt(i);
         i++;
-        const speed =
-          line.startsWith("[BOOT]") || line.startsWith("[SYNC]") || line.startsWith("[OK]")
-            ? 22
-            : line.startsWith("user@")
-              ? 38
-              : 28;
-
-        typingTimeout = setTimeout(typeChar, speed);
+        typingTimeout = setTimeout(typeChar, 50);
       } else {
-        terminalText.textContent += "\n";
-        currentIndex++;
-        if (currentIndex < terminalTextContent.length + 1) {
-          typeWriter();
+        poemLineIndex++;
+        if (poemLineIndex < poemLines.length) {
+          typingTimeout = setTimeout(typeWriter, 350);
         } else {
           isTerminalDone = true;
-          // Wait for user click or keypress to close the terminal and proceed
+          setTimeout(() => {
+            if (!skipTriggered) stopTerminalAndHide();
+          }, 1200);
         }
       }
     }
 
     typeChar();
   }
+
+  // Khởi chạy gõ thơ
+  typeWriter();
 
   // 🎯 Khi skip hoặc terminal kết thúc
   window.mainUILoaded = false;
@@ -162,6 +171,15 @@ document.addEventListener('DOMContentLoaded', function () {
         links.style.opacity = '1';
       }, 200);
     }
+
+    gameBadges.forEach(badge => {
+      badge.style.opacity = '0';
+      badge.style.display = 'flex';
+      setTimeout(() => {
+        badge.style.transition = 'opacity 1s ease, visibility 1s ease, transform 0.3s ease';
+        badge.style.opacity = '1';
+      }, 200);
+    });
 
     initFooterClocks();
     initLenis();
@@ -318,76 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 🧩 Lấy IP
-  fetch('https://api.ipify.org?format=json')
-    .then(response => response.json())
-    .then(data => {
-      terminalTextContent[1] = "IP: " + data.ip;
-      typeWriter();
-    })
-    .catch(() => {
-      terminalTextContent[1] = "IP: Unable to fetch IP address";
-      typeWriter();
-    });
 
-  // 🖥️ Hệ điều hành
-  async function detectOS() {
-    let osName = "Unknown OS";
-
-    // Sử dụng Client Hints API (giúp phân biệt Win 10 và Win 11 chính xác)
-    if (navigator.userAgentData) {
-      try {
-        const ua = await navigator.userAgentData.getHighEntropyValues(["platform", "platformVersion"]);
-        if (ua.platform === "Windows") {
-          const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0], 10);
-          if (majorPlatformVersion >= 13) {
-            return "Windows 11";
-          } else if (majorPlatformVersion > 0) {
-            return "Windows 10";
-          }
-          return "Windows";
-        } else if (ua.platform === "macOS") {
-          return "macOS";
-        } else if (ua.platform) {
-          return ua.platform;
-        }
-      } catch (e) {
-        console.error("userAgentData error:", e);
-      }
-    }
-
-    // Fallback cho trình duyệt không hỗ trợ userAgentData (Safari, Firefox)
-    const userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Mac") !== -1) {
-      const version = userAgent.match(/Mac OS X ([\d_]+)/);
-      return version ? "macOS " + version[1].replace(/_/g, '.') : "macOS";
-    } else if (userAgent.indexOf("Win") !== -1) {
-      const version = userAgent.match(/Windows NT ([\d.]+)/);
-      if (version) {
-        if (version[1] === "10.0") return "Windows 10/11";
-        if (version[1] === "6.3") return "Windows 8.1";
-        if (version[1] === "6.2") return "Windows 8";
-        if (version[1] === "6.1") return "Windows 7";
-      }
-      return "Windows";
-    } else if (userAgent.indexOf("Linux") !== -1) {
-      if (userAgent.indexOf("Android") !== -1) {
-        const version = userAgent.match(/Android ([\d.]+)/);
-        return version ? "Android " + version[1] : "Android";
-      }
-      return "Linux";
-    } else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) {
-      const version = userAgent.match(/OS ([\d_]+)/);
-      return version ? "iOS " + version[1].replace(/_/g, '.') : "iOS";
-    }
-
-    return osName;
-  }
-
-  terminalTextContent[2] = "System: Detecting...";
-  detectOS().then(os => {
-    terminalTextContent[2] = "System: " + os;
-  });
 
   // 📐 Căn giữa terminal ban đầu
   function centerTerminal() {

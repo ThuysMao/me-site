@@ -25,6 +25,7 @@
   <meta name="dmca-site-verification" content="YOUR-CODE" />
 
   <!-- Fonts -->
+  <link href="https://fonts.cdnfonts.com/css/google-sans" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
@@ -60,10 +61,28 @@
         <div class="terminal-button" id="minimize-button"></div>
         <div class="terminal-button" id="maximize-button"></div>
       </div>
-      <div id="terminal-title">thuysmao — -zsh — 80x24</div>
+      <div id="terminal-title"></div>
     </div>
     <div id="terminal-content">
-      <p id="terminal-text"></p>
+      <div id="terminal-text"
+        class="text-lg md:text-xl font-bold tracking-[0.2em] text-white uppercase googlesans_165d8685-module__HBnNZa__className">
+        <div class="poem-line-wrapper">
+          <div class="poem-line-ghost">…Dẫu sấm không vang dội</div>
+          <div class="poem-line" id="line-0"></div>
+        </div>
+        <div class="poem-line-wrapper">
+          <div class="poem-line-ghost">dù mưa chẳng tuôn rơi…</div>
+          <div class="poem-line" id="line-1"></div>
+        </div>
+        <div class="poem-line-wrapper">
+          <div class="poem-line-ghost">Chỉ cần em mong muốn</div>
+          <div class="poem-line" id="line-2"></div>
+        </div>
+        <div class="poem-line-wrapper">
+          <div class="poem-line-ghost">thì ta sẽ chẳng rời.</div>
+          <div class="poem-line" id="line-3"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -161,7 +180,7 @@
     <div id="scroll-container">
       <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
         <a href="./assets/music/checkthisout.mp4" download>
-          Này anh bạn, ấn vào đây đi
+          Ấn vào đây đi có cái hay lắm
           <img src="./assets/pfp/smile.png" alt="Smile Icon" height="20"
             style="vertical-align: middle; margin-left: 8px;" />
         </a>

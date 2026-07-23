@@ -60,34 +60,32 @@ img {
 
 #terminal {
   position: fixed;
-  width: 650px;
-  height: 450px;
-  background: rgba(10, 10, 12, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(700px, 90vw);
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   color: #ffffff;
-  border-radius: 16px;
+  border-radius: 0;
   z-index: 1000;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 600px) {
   #terminal {
-    max-width: 90%;
-    height: 60vh;
+    width: 90% !important;
+    padding: 0;
   }
 }
 
 #terminal-header {
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 14px 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
+  display: none;
 }
 
 #terminal-title {
@@ -125,21 +123,57 @@ img {
 #maximize-button { background-color: #27c93f; }
 
 #terminal-content {
-  padding: 24px;
-  height: calc(100% - 44px);
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow-y: auto;
   user-select: none;
 }
 
 #terminal-text {
-  margin-top: 20px;
+  margin: 0 auto;
   padding: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  overflow: hidden;
-  white-space: pre-line;
-  font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
-  color: #E0E0E0;
+  width: max-content;
+  max-width: 90vw;
+  font-family: 'Product Sans', 'Google Sans', 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: left;
+  line-height: 2.2;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.poem-line-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: start;
+  min-height: 2.2em;
+  width: 100%;
+}
+
+.poem-line-ghost {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+}
+
+.poem-line {
+  grid-area: 1 / 1;
+  white-space: pre;
+  text-align: left;
 }
 
 #myVideo {
@@ -1100,10 +1134,11 @@ marquee a.social-link:hover {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   z-index: 9999;
   backdrop-filter: blur(4px);
-  display: flex;
+  display: none;
+  opacity: 0;
   align-items: center;
   gap: 6px;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  transition: opacity 1s ease, visibility 1s ease, transform 0.3s ease;
 }
 
 .faceit span {
@@ -1143,10 +1178,11 @@ marquee a.social-link:hover {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   z-index: 9999;
   backdrop-filter: blur(4px);
-  display: flex;
+  display: none;
+  opacity: 0;
   align-items: center;
   gap: 6px;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  transition: opacity 1s ease, visibility 1s ease, transform 0.3s ease;
 }
 
 .valorant span {
@@ -1178,11 +1214,12 @@ marquee a.social-link:hover {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   z-index: 9999;
   backdrop-filter: blur(4px);
-  display: flex;
+  display: none;
+  opacity: 0;
   align-items: center;
   gap: 6px;
   min-height: 24px;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  transition: opacity 1s ease, visibility 1s ease, transform 0.3s ease;
 }
 
 .scrolled-out {
@@ -1961,8 +1998,9 @@ body {
   /* Center terminal */
   #terminal {
     width: 90% !important;
+    top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%) !important;
   }
 
   /* Scale down game badges */
