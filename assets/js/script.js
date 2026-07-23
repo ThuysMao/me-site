@@ -33,9 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
   audioBackground.pause();
 
   // 🧠 Gõ 4 câu thơ từng dòng cố định vị trí
+  // Tạo con trỏ nhấp nháy
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  cursor.textContent = '|';
+
   function typeWriter() {
-    if (skipTriggered) return;
+    if (skipTriggered) { cursor.remove(); return; }
     if (poemLineIndex >= poemLines.length) {
+      cursor.remove();
       isTerminalDone = true;
       setTimeout(() => {
         if (!skipTriggered) stopTerminalAndHide();
@@ -47,17 +53,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const targetEl = document.getElementById(`line-${poemLineIndex}`) || terminalText;
     let i = 0;
 
+    // appendChild tự động di chuyển cursor từ dòng cũ sang dòng mới (không cần remove)
+    targetEl.appendChild(cursor);
+
     function typeChar() {
-      if (skipTriggered) return;
+      if (skipTriggered) { cursor.remove(); return; }
       if (i < line.length) {
-        targetEl.textContent += line.charAt(i);
+        cursor.before(line.charAt(i));
         i++;
         typingTimeout = setTimeout(typeChar, 50);
       } else {
         poemLineIndex++;
         if (poemLineIndex < poemLines.length) {
+          // Chuyển sang dòng tiếp theo sau delay — cursor giữ nguyên ở dòng cũ
           typingTimeout = setTimeout(typeWriter, 350);
         } else {
+          cursor.remove();
           isTerminalDone = true;
           setTimeout(() => {
             if (!skipTriggered) stopTerminalAndHide();
