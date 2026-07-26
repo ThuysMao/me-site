@@ -1182,9 +1182,67 @@ marquee a.social-link:hover {
   /* 👈 bo góc 4px, chỉnh theo ý bạn */
 }
 
+.premier {
+  position: fixed;
+  top: 55px;
+  left: 13px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  display: none;
+  opacity: 0;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 1s ease, visibility 1s ease, transform 0.3s ease;
+}
+
+.premier span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.premier-icon {
+  width: 23px;
+  height: auto;
+  object-fit: contain;
+}
+
+.cs2rating {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+  margin: 0;
+  width: 62px;
+  height: 24px;
+  padding: 0 4px 0 10px;
+  font-size: 14px;
+  color: #EB4B4B;
+  background-image: url(https://static.csstats.gg/images/ranks/cs2/rating.ancient.png);
+}
+
 .valorant {
   position: fixed;
-  top: 50px;
+  top: 95px;
   left: 13px;
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
@@ -1220,7 +1278,7 @@ marquee a.social-link:hover {
 
 .csgo {
   position: fixed;
-  top: 85px;
+  top: 135px;
   left: 13px;
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
@@ -2022,6 +2080,7 @@ body {
 
   /* Scale down game badges */
   .faceit,
+  .premier,
   .valorant,
   .csgo {
     transform: scale(0.8);
@@ -2033,13 +2092,18 @@ body {
     left: 10px !important;
   }
 
+  .premier {
+    top: 48px !important;
+    left: 10px !important;
+  }
+
   .valorant {
-    top: 45px !important;
+    top: 86px !important;
     left: 10px !important;
   }
 
   .csgo {
-    top: 80px !important;
+    top: 124px !important;
     left: 10px !important;
   }
 
