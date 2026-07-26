@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (links) links.classList.remove('links--visible');
   if (blurredBox) blurredBox.style.display = 'none';
 
-  const gameBadges = document.querySelectorAll('.faceit, .valorant, .csgo');
+  const gameBadges = document.querySelectorAll('.faceit, .premier, .valorant, .csgo');
   gameBadges.forEach(el => {
     el.style.display = 'none';
     el.style.opacity = '0';
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 📜 Hiệu ứng fade mượt khi cuộn trang
   window.addEventListener('scroll', function () {
-    const elements = document.querySelectorAll('.faceit, .valorant, .csgo, #scroll-container, #media-toggle-buttons');
+    const elements = document.querySelectorAll('.faceit, .premier, .valorant, .csgo, #scroll-container, #media-toggle-buttons');
     if (window.scrollY > 50) {
       elements.forEach(el => el.classList.add('scrolled-out'));
     } else {
