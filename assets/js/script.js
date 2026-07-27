@@ -395,18 +395,47 @@ document.addEventListener('DOMContentLoaded', function () {
   function initParticles() {
     particlesJS("particles-js", {
       particles: {
-        number: { value: 50, density: { enable: true, value_area: 1000 } },
+        number: { value: 75, density: { enable: true, value_area: 900 } },
         color: { value: "#ffffff" },
-        shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
-        opacity: { value: 0.7, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.3, sync: false } },
-        size: { value: 4, random: true, anim: { enable: true, speed: 1, size_min: 1.5, sync: false } },
-        line_linked: { enable: true, distance: 140, color: "#ffffff", opacity: 0.6, width: 1.4 },
-        move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
+        shape: { type: "circle" },
+        opacity: {
+          value: 0.5,
+          random: true,
+          anim: { enable: true, speed: 0.6, opacity_min: 0.15, sync: false }
+        },
+        size: {
+          value: 2.2,
+          random: true,
+          anim: { enable: true, speed: 1, size_min: 0.5, sync: false }
+        },
+        line_linked: {
+          enable: true,
+          distance: 140,
+          color: "#a855f7",
+          opacity: 0.35,
+          width: 1.2
+        },
+        move: {
+          enable: true,
+          speed: 0.8,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
       },
       interactivity: {
-        detect_on: "canvas",
-        events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
-        modes: { grab: { distance: 140, line_linked: { opacity: 0.3 } }, push: { particles_nb: 3 } }
+        detect_on: "window",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          grab: { distance: 160, line_linked: { opacity: 0.6 } },
+          push: { particles_nb: 4 }
+        }
       },
       retina_detect: true
     });
