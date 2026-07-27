@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
         shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
         opacity: { value: 0.7, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.3, sync: false } },
         size: { value: 4, random: true, anim: { enable: true, speed: 1, size_min: 1.5, sync: false } },
-        line_linked: { enable: true, distance: 140, color: "#ffffff", opacity: 0.35, width: 1.5 },
+        line_linked: { enable: true, distance: 140, color: "#ffffff", opacity: 0.6, width: 1.4 },
         move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
       },
       interactivity: {
