@@ -1,4 +1,6 @@
 <div align="center">
+  <img src="./assets/img/banner.png" alt="ThuysMao Portfolio Banner">
+  <br />
   <img src="./assets/favico/icon.png" alt="Logo" width="100" height="100">
 
   # ThuysMao Portfolio ✨
@@ -22,9 +24,11 @@
 ## ✨ Key Features
 
 - 🖥️ **Terminal Boot Sequence**: A simulated command-line interface that dynamically fetches user IP and OS details before revealing the site.
+- 🌗 **Light/Dark Mode**: Seamless theme switching for a personalized viewing experience.
 - 🎵 **Integrated Media Player**: Custom audio and video background controls featuring volume adjustments, mute, play/pause, and a mode-switching system (Image/Video vs. Music).
-- 🎮 **Live Discord Presence**: Utilizes the **Lanyard API** to display real-time Discord status, custom status bubbles, and current activities (like Spotify playback or active games).
-- 🏆 **Gaming Statistics**: Beautiful UI elements displaying current Faceit ELO/Stats and historical Valorant ranks.
+- 💽 **Dynamic Footer Vinyl**: A Spotify-style spinning vinyl disc in the footer that syncs with current active playback.
+- 🎮 **Live Discord Presence**: Utilizes the **Lanyard API** to display real-time Discord status, custom status bubbles, current activities, and a clan join integration.
+- 🏆 **Gaming Statistics**: Beautiful UI elements displaying current Faceit ELO, **CS2 Premier Rating**, and historical Valorant ranks.
 - 🎨 **Immersive UI/UX**:
   - Glassmorphism design patterns.
   - Smooth scrolling powered by **Lenis**.
@@ -32,6 +36,7 @@
   - 3D Tilt effects on profile cards.
   - Custom scrollbar and pointers.
 - 🕒 **Live Timezones**: Real-time clocks keeping track of active timezones (Asia/Ho_Chi_Minh).
+- 🛡️ **SEO & Security**: Enhanced with Schema.org structured data and DMCA protection.
 
 ## 🛠️ Built With
 
@@ -74,6 +79,7 @@ To run this project locally, you don't need any complex build tools. Just serve 
 │   ├── cursor/            # Custom cursors
 │   ├── favico/            # Site icons and favicons
 │   ├── icon/              # Various UI icons
+│   ├── img/               # General images (like the README banner)
 │   ├── js/                # JavaScript modules
 │   ├── music/             # Audio tracks
 │   └── pfp/               # Profile pictures and gaming icons
