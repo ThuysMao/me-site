@@ -188,45 +188,120 @@
     </div>
   </div>
 
-  <!-- Faceit Info Box -->
-  <div class="faceit">
-    <span>
-      <img src="./assets/pfp/faceit.png" alt="Faceit Rank Icon" class="faceit-icon">
-      <strong>2372</strong>
-    </span> |
-    <span><strong>1.17 KDR</strong></span> |
-    <span><strong>57 hs%</strong></span> |
-    <span>
-      <img src="./assets/pfp/flag.png" alt="Country Flag" class="faceit-flag">
-      <strong>#393</strong>
-    </span>
-  </div>
+  <!-- Game Stats Container -->
+  <div class="game-stats-container">
+    <!-- Faceit Info Box -->
+    <div class="faceit">
+      <div class="csstats-main"
+        style="align-items: center; justify-content: space-between; border: none; background: transparent; padding: 0; width: 100%;">
+        <img src="./assets/icon/faceiticon.png" alt="FACEIT Logo" class="faceit-logo" style="height: 20px;">
+        <span style="color: #fff; font-size: 14px; font-weight: bold;">&mdash;</span>
 
-  <div class="premier">
-    <span>
-      <strong>Peak Premier</strong>
-    </span> |
-    <div class="cs2rating ancient sm"
-      style="background-image: url(https://static.csstats.gg/images/ranks/cs2/rating.ancient.png)">
-      <span class="">
-        27<small>,209</small>
-      </span>
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <img src="./assets/pfp/faceit.png" alt="Faceit Rank Icon" class="faceit-icon" style="width: 34px;">
+          <div class="csstats-col">
+            <span class="csstats-label">ELO</span>
+            <span class="csstats-value-lg">2372</span>
+          </div>
+          <div class="csstats-col">
+            <span class="csstats-label">KDR</span>
+            <span class="csstats-value-lg" style="color: #bbb;">1.17</span>
+          </div>
+          <div class="csstats-col">
+            <span class="csstats-label">HS%</span>
+            <span class="csstats-value-lg" style="color: #bbb;">57%</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="valorant">
-    <span>
-      <img src="./assets/pfp/immo3.png" alt="Valorant Rank Icon" class="valorant-icon">
-      <strong>Ep2,7</strong>
-    </span> |
-    <span>
-      <img src="./assets/pfp/immo1.png" alt="Valorant Rank Icon" class="valorant-icon">
-      <strong>Ep4</strong>
-    </span> |
-    <span>
-      <img src="./assets/pfp/ascent2.png" alt="Valorant Rank Icon" class="valorant-icon">
-      <strong>Ep6,8</strong>
-    </span>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <div class="premier" style="flex: 1; min-width: 200px;">
+        <span
+          style="font-weight: 800; font-size: 10px; letter-spacing: 1px; color: #fff; text-transform: uppercase;">PREMIER</span>
+        <div class="csstats-main" style="justify-content: space-between;">
+          <div class="csstats-col" style="align-items: flex-start; padding-left: 8px;">
+            <span class="csstats-label">SEASON</span>
+            <span class="csstats-value-lg" style="font-size: 20px; margin-top: 5px;">S5 <span class="yr"
+                style="font-size: 11px; color: #666; font-weight: normal;">2026</span></span>
+          </div>
+
+          <div class="csstats-col" style="align-items: center;">
+            <span class="csstats-label">WINS</span>
+            <span class="csstats-value-lg">19</span>
+          </div>
+
+          <div class="csstats-col" style="align-items: center; padding-right: 8px;">
+            <span class="csstats-label">BEST</span>
+            <div class="cs2rating ancient sm"><span class="">26<small>,373</small></span></div>
+          </div>
+        </div>
+
+        <table class="csstats-table">
+          <thead>
+            <tr>
+              <th>SEASON</th>
+              <th>WINS</th>
+
+              <th>BEST</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>S4</strong> <span class="yr">2026</span></td>
+              <td><strong>59</strong></td>
+
+              <td>
+                <div class="cs2rating ancient sm"><span class="">27<small>,209</small></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>S3</strong> <span class="yr">2025</span></td>
+              <td><strong>118</strong></td>
+
+              <td>
+                <div class="cs2rating ancient sm"><span class="">25<small>,007</small></span></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="valorant" style="flex: 1; justify-content: center; min-width: 200px;">
+        <span
+          style="font-weight: 800; font-size: 10px; letter-spacing: 1px; color: #fff; text-transform: uppercase;">VALORANT</span>
+        <table class="csstats-table">
+          <thead>
+            <tr>
+              <th>EPISODE</th>
+              <th>PEAK RANK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ep 2</strong> <span class="yr">2021</span></td>
+              <td><img src="./assets/pfp/immo3.png" alt="Valorant Rank Icon" class="valorant-icon"></td>
+            </tr>
+            <tr>
+              <td><strong>Ep 4</strong> <span class="yr">2022</span></td>
+              <td><img src="./assets/pfp/immo1.png" alt="Valorant Rank Icon" class="valorant-icon"></td>
+            </tr>
+            <tr>
+              <td><strong>Ep 6</strong> <span class="yr">2023</span></td>
+              <td><img src="./assets/pfp/ascent2.png" alt="Valorant Rank Icon" class="valorant-icon"></td>
+            </tr>
+            <tr>
+              <td><strong>Ep 7</strong> <span class="yr">2023</span></td>
+              <td><img src="./assets/pfp/immo3.png" alt="Valorant Rank Icon" class="valorant-icon"></td>
+            </tr>
+            <tr>
+              <td><strong>Ep 8</strong> <span class="yr">2024</span></td>
+              <td><img src="./assets/pfp/ascent2.png" alt="Valorant Rank Icon" class="valorant-icon"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- Toggle Buttons -->
@@ -255,14 +330,20 @@
                 <i class="fa-regular fa-envelope"></i> <span>work@thuysmao.com</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a href="tel:" class="custom-cursor">
                 <i class="fa-solid fa-phone"></i> <span>phone</span>
               </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
               <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="custom-cursor">
                 <i class="fa-brands fa-facebook"></i> <span>facebook.com</span>
+              </a>
+            </li> -->
+            <li>
+              <a href="https://discord.com/users/985537688159522847" target="_blank" rel="noopener noreferrer"
+                class="custom-cursor">
+                <i class="fa-brands fa-discord"></i> <span>@thuysmao</span>
               </a>
             </li>
             <li>
@@ -294,29 +375,11 @@
                 <i class="fa-brands fa-steam"></i> <span>premier account</span>
               </a>
             </li>
-            <li>
-              <a href="https://discord.com/users/985537688159522847" target="_blank" rel="noopener noreferrer"
-                class="custom-cursor">
-                <i class="fa-brands fa-discord"></i> <span>@thuysmao</span>
-              </a>
-            </li>
             <li class="clock-item">
               <i class="fa-regular fa-clock"></i>
               <span>UTC +7</span>
               <span class="timezone-time" id="time-hcm">11:41:51</span>
               <span class="timezone-label">Asia/Ho_Chi_Minh</span>
-            </li>
-            <li>
-              <a href="https://www.google.com/maps/search/?api=1&query=Đ.+Tả+Thanh+Oai,+Đại+Thanh,+Hà+Nội"
-                target="_blank" rel="noopener noreferrer" class="custom-cursor">
-                <i class="fa-solid fa-location-dot"></i> <span>Đ. Tả Thanh Oai, Đại Thanh, Hà Nội</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.google.com/maps/search/?api=1&query=P.Khương+Trung,+Khương+Đình,+Hà+Nội"
-                target="_blank" rel="noopener noreferrer" class="custom-cursor">
-                <i class="fa-solid fa-location-dot"></i> <span>P.Khương Trung, Khương Đình, Hà Nội</span>
-              </a>
             </li>
           </ul>
         </div>
