@@ -1169,7 +1169,7 @@ marquee a.social-link:hover {
 }
 
 .faceit {
-  background: #17181c;
+  background: transparent;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -1239,7 +1239,7 @@ marquee a.social-link:hover {
 }
 
 .premier {
-  background: #17181c;
+  background: transparent;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -1410,7 +1410,7 @@ marquee a.social-link:hover {
 }
 
 .valorant {
-  background: #17181c;
+  background: transparent;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
