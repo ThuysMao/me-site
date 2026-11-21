@@ -89,11 +89,22 @@ document.addEventListener('DOMContentLoaded', function () {
   function handleInput() {
     if (window.mainUILoaded) return;
     window.mainUILoaded = true;
+    skipTriggered = true;
+    if (typingTimeout) clearTimeout(typingTimeout);
+    removeEventListeners();
 
     if (skipButton) {
-      skipButton.style.transition = 'opacity 0.4s ease';
+      skipButton.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
       skipButton.style.opacity = '0';
-      setTimeout(() => skipButton.style.display = 'none', 400);
+      skipButton.style.transform = 'translateY(-4px)';
+      setTimeout(() => skipButton.style.display = 'none', 350);
+    }
+
+    const introGlow = document.getElementById('intro-ambient-glow');
+    if (introGlow) {
+      introGlow.style.transition = 'opacity 0.6s ease';
+      introGlow.style.opacity = '0';
+      setTimeout(() => introGlow.style.display = 'none', 600);
     }
 
     const particlesBg = document.getElementById('particles-js');
@@ -103,22 +114,21 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => particlesBg.style.display = 'none', 500);
     }
 
-    hideTerminal();
-    removeEventListeners();
-    showMainUI();
-  }
-
-  function hideTerminal() {
-    terminalContainer.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    // Hiệu ứng tan biến mềm mại cho Terminal Window (scale nhẹ ra ngoài, blur và mờ dần)
+    terminalContainer.style.transition = 'opacity 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.4s ease';
     terminalContainer.style.opacity = '0';
-    terminalContainer.style.transform = 'scale(0.9)';
-    setTimeout(() => terminalContainer.style.display = 'none', 400);
+    terminalContainer.style.transform = 'translate(-50%, -50%) scale(1.03)';
+    terminalContainer.style.filter = 'blur(10px)';
+    terminalContainer.style.pointerEvents = 'none';
+
+    // Đợi terminal tan biến phần lớn (220ms) mới mở giao diện chính để chuyển cảnh mượt mà, không va chạm
+    setTimeout(() => {
+      terminalContainer.style.display = 'none';
+      showMainUI();
+    }, 220);
   }
 
   function stopTerminalAndHide() {
-    skipTriggered = true;
-    if (typingTimeout) clearTimeout(typingTimeout);
-    hideTerminal();
     handleInput();
   }
 
@@ -129,34 +139,38 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass');
     document.body.classList.add('allow-scroll');
 
-    // Fade in mượt mà cho blurredBox
+    // Khởi tạo trạng thái ban đầu của blurredBox
     blurredBox.style.opacity = '0';
-    blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.95)';
+    blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.96)';
+    blurredBox.style.filter = 'blur(6px)';
     blurredBox.style.display = 'block';
 
-    // Force reflow
-    void blurredBox.offsetWidth;
+    // Sử dụng double requestAnimationFrame để chuyển cảnh GPU đạt 60fps/120fps mượt mà
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        blurredBox.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+        blurredBox.style.opacity = '1';
+        blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(1)';
+        blurredBox.style.filter = 'blur(0px)';
+        blurredBox.classList.add('theme-ready');
 
-    blurredBox.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    blurredBox.style.opacity = '1';
-    blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(1)';
-    blurredBox.classList.add('theme-ready');
-
-    // Remove inline transform and transition after animation completes
-    // so it doesn't conflict with tilt-effect.js
-    setTimeout(() => {
-      blurredBox.style.transition = '';
-      blurredBox.style.transform = '';
-    }, 800);
+        // Gỡ bỏ inline transition/filter sau khi hoàn tất để nhường quyền điều khiển cho tilt-effect.js
+        setTimeout(() => {
+          blurredBox.style.transition = '';
+          blurredBox.style.transform = '';
+          blurredBox.style.filter = '';
+        }, 700);
+      });
+    });
 
     const githubLinkButton = document.getElementById('github-link-button');
     if (githubLinkButton) {
       githubLinkButton.style.opacity = '0';
       githubLinkButton.style.display = 'block';
       setTimeout(() => {
-        githubLinkButton.style.transition = 'opacity 1s ease';
+        githubLinkButton.style.transition = 'opacity 0.8s ease';
         githubLinkButton.style.opacity = '1';
-      }, 200);
+      }, 150);
     }
 
     const scrollContainer = document.getElementById('scroll-container');
@@ -164,32 +178,32 @@ document.addEventListener('DOMContentLoaded', function () {
       scrollContainer.style.opacity = '0';
       scrollContainer.style.display = 'inline-block';
       setTimeout(() => {
-        scrollContainer.style.transition = 'opacity 1s ease';
+        scrollContainer.style.transition = 'opacity 0.8s ease';
         scrollContainer.style.opacity = '1';
         const marquee = scrollContainer.querySelector('marquee');
         if (marquee && typeof marquee.start === 'function') {
           marquee.stop();
           setTimeout(() => marquee.start(), 50);
         }
-      }, 200);
+      }, 150);
     }
 
     if (links) {
       links.style.opacity = '0';
       links.classList.add('links--visible');
       setTimeout(() => {
-        links.style.transition = 'opacity 1s ease';
+        links.style.transition = 'opacity 0.8s ease';
         links.style.opacity = '1';
-      }, 200);
+      }, 150);
     }
 
     gameBadges.forEach(badge => {
       badge.style.opacity = '0';
       badge.style.display = 'flex';
       setTimeout(() => {
-        badge.style.transition = 'opacity 1s ease, visibility 1s ease, transform 0.3s ease';
+        badge.style.transition = 'opacity 0.8s ease, transform 0.4s ease';
         badge.style.opacity = '1';
-      }, 200);
+      }, 150);
     });
 
     initFooterClocks();
@@ -227,7 +241,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (skipButton) skipButton.addEventListener('click', stopTerminalAndHide);
 
   function handleKeyPress(event) {
-    if (isTerminalDone) stopTerminalAndHide();
+    if (event.code === 'Space' || event.code === 'Escape' || event.code === 'Enter' || isTerminalDone) {
+      if (event.code === 'Space' || event.code === 'Enter') {
+        event.preventDefault();
+      }
+      stopTerminalAndHide();
+    }
   }
   function handleClick(e) {
     if (isTerminalDone) {
@@ -253,35 +272,58 @@ document.addEventListener('DOMContentLoaded', function () {
   // --- OS WINDOW LOGIC (DRAG & BUTTONS) ---
   const terminalHeader = document.getElementById('terminal-header');
   let isDragging = false;
-  let offsetX, offsetY;
+  let hasDragged = false;
+  let startX = 0, startY = 0;
+  let offsetX = 0, offsetY = 0;
 
   if (terminalHeader) {
     terminalHeader.style.cursor = 'grab';
     terminalHeader.addEventListener('mousedown', (e) => {
+      // Không kéo khi bấm vào các nút điều khiển
+      if (e.target.closest('#close-button') || e.target.closest('#minimize-button') || e.target.closest('#maximize-button')) {
+        return;
+      }
+
       isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+
       const rect = terminalContainer.getBoundingClientRect();
       offsetX = e.clientX - rect.left;
       offsetY = e.clientY - rect.top;
-      terminalHeader.style.cursor = 'grabbing';
 
-      // Hủy center bằng transform để drag mượt
-      if (!terminalContainer.style.transform || terminalContainer.style.transform !== 'none') {
-        terminalContainer.style.left = rect.left + 'px';
-        terminalContainer.style.top = rect.top + 'px';
-        terminalContainer.style.transform = 'none';
-      }
+      terminalHeader.style.cursor = 'grabbing';
+      // Tắt transition ngay lập tức để chuyển động theo chuột không bị lag/giật
+      terminalContainer.style.transition = 'none';
     });
 
     document.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
-      terminalContainer.style.left = (e.clientX - offsetX) + 'px';
-      terminalContainer.style.top = (e.clientY - offsetY) + 'px';
+
+      const dx = Math.abs(e.clientX - startX);
+      const dy = Math.abs(e.clientY - startY);
+
+      // Chỉ chuyển đổi từ center transform sang tọa độ pixel khi chuột thực sự di chuyển (> 2px)
+      // Giúp việc click chuột thông thường hoàn toàn đứng yên, không giật dù chỉ 1 pixel
+      if (!hasDragged && (dx > 2 || dy > 2)) {
+        hasDragged = true;
+        terminalContainer.style.left = (e.clientX - offsetX) + 'px';
+        terminalContainer.style.top = (e.clientY - offsetY) + 'px';
+        terminalContainer.style.transform = 'none';
+        return;
+      }
+
+      if (hasDragged) {
+        terminalContainer.style.left = (e.clientX - offsetX) + 'px';
+        terminalContainer.style.top = (e.clientY - offsetY) + 'px';
+      }
     });
 
     document.addEventListener('mouseup', () => {
       if (isDragging) {
         isDragging = false;
         terminalHeader.style.cursor = 'grab';
+        terminalContainer.style.transition = '';
       }
     });
   }
@@ -351,8 +393,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 📐 Căn giữa terminal ban đầu
   function centerTerminal() {
-    if (isDragging || isMaximized) return; // Không can thiệp nếu user đã kéo hoặc phóng to
-    terminalContainer.style.position = 'absolute';
+    if (isDragging || isMaximized || hasDragged) return; // Không can thiệp nếu user đã kéo hoặc phóng to
+    terminalContainer.style.position = 'fixed';
     terminalContainer.style.left = '50%';
     terminalContainer.style.top = '50%';
     terminalContainer.style.transform = 'translate(-50%, -50%)';
@@ -391,33 +433,33 @@ document.addEventListener('DOMContentLoaded', function () {
   setInterval(updateClock, 1000);
   updateClock();
 
-  // ✨ particles
+  // ✨ particles (Tươi sáng theo theme Maomao: Xanh ngọc & Hồng hoa đào)
   function initParticles() {
     particlesJS("particles-js", {
       particles: {
-        number: { value: 75, density: { enable: true, value_area: 900 } },
-        color: { value: "#ffffff" },
+        number: { value: 75, density: { enable: true, value_area: 850 } },
+        color: { value: ["#ffffff", "#10b981", "#34d399", "#f472b6", "#fda4af"] },
         shape: { type: "circle" },
         opacity: {
-          value: 0.5,
+          value: 0.65,
           random: true,
-          anim: { enable: true, speed: 0.6, opacity_min: 0.15, sync: false }
+          anim: { enable: true, speed: 0.8, opacity_min: 0.2, sync: false }
         },
         size: {
-          value: 2.2,
+          value: 2.4,
           random: true,
-          anim: { enable: true, speed: 1, size_min: 0.5, sync: false }
+          anim: { enable: true, speed: 1.2, size_min: 0.6, sync: false }
         },
         line_linked: {
           enable: true,
           distance: 140,
-          color: "#a855f7",
+          color: "#34d399",
           opacity: 0.35,
           width: 1.2
         },
         move: {
           enable: true,
-          speed: 0.8,
+          speed: 0.85,
           direction: "none",
           random: true,
           straight: false,
@@ -433,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
           resize: true
         },
         modes: {
-          grab: { distance: 160, line_linked: { opacity: 0.6 } },
+          grab: { distance: 160, line_linked: { opacity: 0.7 } },
           push: { particles_nb: 4 }
         }
       },
