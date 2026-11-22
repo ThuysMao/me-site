@@ -50,15 +50,31 @@
 </head>
 
 <body>
-  <!-- Ambient Aurora Glow for Intro -->
-  <div id="intro-ambient-glow" class="intro-ambient-glow">
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    <div class="glow-orb orb-3"></div>
+  <!-- 🎬 CINEMATIC SHINKAI INTRO LAYER -->
+  <div id="shinkai-intro">
+    <div class="cinema-bar top"></div>
+    <div class="cinema-bar bottom"></div>
+
+    <canvas id="shinkai-rain"></canvas>
+    <div class="shinkai-aura"></div>
+    <div class="shinkai-flare" id="shinkai-flare"></div>
+
+    <!-- Authentic User Skip Button -->
+    <button id="skip-button">𝚜𝚔𝚒𝚙</button>
+
+    <div class="shinkai-stage">
+      <div class="shinkai-badge" id="s-badge"></div>
+      <div class="shinkai-poem">
+        <p class="s-line" id="sl-0">…Dẫu sấm không vang dội</p>
+        <p class="s-line" id="sl-1">dù mưa chẳng tuôn rơi…</p>
+        <p class="s-line" id="sl-2">Chỉ cần em mong muốn</p>
+        <p class="s-line" id="sl-3">thì ta sẽ chẳng rời.</p>
+      </div>
+      <div class="shinkai-author" id="s-author"></div>
+      <div class="shinkai-hint"><i class="fa-regular fa-hand-pointer"></i> Nhấn Space hoặc Click để vào</div>
+    </div>
   </div>
 
-  <div id="particles-js"></div>
-  <button id="skip-button">𝚜𝚔𝚒𝚙</button>
   <a id="github-link-button" href="https://github.com/ThuysMao/me-site" target="_blank" rel="noopener noreferrer"
     class="custom-cursor">𝚜𝚘𝚞𝚛𝚌𝚎 𝚌𝚘𝚍𝚎</a>
   <!-- Thêm heading chính cho SEO -->
@@ -68,45 +84,6 @@
   <div id="blur-overlay"></div>
   <div id="rainbow"></div>
   <div id="clock"></div>
-
-  <!-- Terminal Window (Modern Glass Intro Card) -->
-  <div id="terminal" class="modern-intro-card">
-    <div id="terminal-header">
-      <div id="terminal-buttons">
-        <div class="terminal-button" id="close-button" title="Đóng"></div>
-        <div class="terminal-button" id="minimize-button" title="Thu nhỏ"></div>
-        <div class="terminal-button" id="maximize-button" title="Phóng to"></div>
-      </div>
-      <div id="terminal-title">
-        <span class="title-pulse-dot"></span>
-        <span>THUYSMAO // 2026</span>
-      </div>
-      <div class="terminal-header-meta">
-        <span class="tag-live">ACTIVE</span>
-      </div>
-    </div>
-    <div id="terminal-content">
-      <div id="terminal-text"
-        class="text-lg md:text-xl font-bold tracking-[0.2em] text-white uppercase googlesans_165d8685-module__HBnNZa__className">
-        <div class="poem-line-wrapper">
-          <div class="poem-line-ghost">…Dẫu sấm không vang dội</div>
-          <div class="poem-line" id="line-0"></div>
-        </div>
-        <div class="poem-line-wrapper">
-          <div class="poem-line-ghost">dù mưa chẳng tuôn rơi…</div>
-          <div class="poem-line" id="line-1"></div>
-        </div>
-        <div class="poem-line-wrapper">
-          <div class="poem-line-ghost">Chỉ cần em mong muốn</div>
-          <div class="poem-line" id="line-2"></div>
-        </div>
-        <div class="poem-line-wrapper">
-          <div class="poem-line-ghost">thì ta sẽ chẳng rời.</div>
-          <div class="poem-line" id="line-3"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <video id="myVideo" muted playsinline></video>
   <audio id="myAudio"></audio>
@@ -610,7 +587,6 @@
   <script src="./assets/js/music-control.js"></script>
   <script src="./assets/js/tilt-effect.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 
   <script src="./assets/js/script.js" defer></script>
