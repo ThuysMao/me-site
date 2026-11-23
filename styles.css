@@ -50,7 +50,7 @@ body::-webkit-scrollbar {
 }
 
 .custom-cursor {
-  cursor: url('./assets/cursor/pointer.png'), auto !important;
+  cursor: url('./assets/cursor/mao.png'), pointer !important;
 }
 
 img {
@@ -71,12 +71,12 @@ img {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  transition: opacity 1.4s cubic-bezier(0.12, 0.8, 0.25, 1);
+  will-change: opacity;
 }
 
 #shinkai-intro.done {
   opacity: 0;
-  filter: blur(14px);
   pointer-events: none;
 }
 
@@ -89,7 +89,8 @@ img {
   background: #000000;
   z-index: 10002;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.35s cubic-bezier(0.12, 0.8, 0.25, 1);
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -127,7 +128,7 @@ img {
   position: absolute;
   width: min(650px, 90vw);
   height: min(450px, 70vw);
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(244, 114, 182, 0.12) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(186, 230, 253, 0.15) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
   filter: blur(70px);
   pointer-events: none;
   z-index: 2;
@@ -141,6 +142,13 @@ img {
   padding: 20px;
   user-select: none;
   max-width: 90vw;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+#shinkai-intro.done .shinkai-stage {
+  opacity: 0;
+  transform: translateY(-14px) scale(0.98);
 }
 
 .shinkai-badge {
@@ -175,10 +183,10 @@ img {
   line-height: 1.8;
   text-transform: uppercase;
   color: transparent;
-  background: linear-gradient(135deg, #ffffff 40%, #e6fffa 75%, #fce7f3 100%);
+  background: linear-gradient(135deg, #ffffff 40%, #f0f9ff 75%, #e0f2fe 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: blur(14px) drop-shadow(0 0 16px rgba(16, 185, 129, 0.35));
+  filter: blur(14px) drop-shadow(0 0 16px rgba(186, 230, 253, 0.3));
   opacity: 0;
   transform: translateY(12px);
   transition: filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
@@ -189,8 +197,17 @@ img {
 
 .s-line.revealed {
   opacity: 1;
-  filter: blur(0px) drop-shadow(0 0 20px rgba(16, 185, 129, 0.45));
+  filter: blur(0px) drop-shadow(0 0 20px rgba(224, 242, 254, 0.45));
   transform: translateY(0);
+}
+
+/* Soundwave Dispersal (Sương khói sương bạc tan mờ) */
+.s-line.soundwave-disperse {
+  letter-spacing: 0.42em !important;
+  transform: scale(1.08) !important;
+  filter: blur(12px) drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 45px rgba(186, 230, 253, 0.45)) !important;
+  opacity: 0 !important;
+  transition: all 1.25s cubic-bezier(0.12, 0.8, 0.25, 1) !important;
 }
 
 .shinkai-author {
@@ -216,49 +233,89 @@ img {
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.35);
   animation: hintFade 2.5s infinite ease-in-out;
+  transition: opacity 0.3s ease;
+}
+
+#shinkai-intro.done .shinkai-hint {
+  opacity: 0;
 }
 
 @keyframes hintFade {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
   }
+
   50% {
     opacity: 0.8;
   }
 }
 
-/* Light Sweep Flare */
-.shinkai-flare {
+/* 🌊 REALISTIC WATER RIPPLE OPTICS */
+.soundwave-ring {
   position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(52, 211, 153, 0.8) 50%, transparent 100%);
-  transform: translateY(-50%) scaleX(0);
-  opacity: 0;
+  border-radius: 50%;
   pointer-events: none;
-  z-index: 4;
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(0);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 0 16px rgba(255, 255, 255, 0.7),
+    0 0 38px rgba(186, 230, 253, 0.45),
+    inset 0 0 20px rgba(255, 255, 255, 0.35),
+    inset 0 0 45px rgba(125, 211, 252, 0.2);
+  backdrop-filter: blur(2.5px) contrast(1.08);
+  -webkit-backdrop-filter: blur(2.5px) contrast(1.08);
+  animation: soundwaveExpand 1.45s cubic-bezier(0.12, 0.8, 0.25, 1) forwards;
 }
 
-.shinkai-flare.sweep {
-  animation: flareSweep 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.soundwave-ring.harmonic {
+  border: 1.2px solid rgba(224, 242, 254, 0.7);
+  box-shadow: 
+    0 0 24px rgba(186, 230, 253, 0.35),
+    inset 0 0 25px rgba(255, 255, 255, 0.2);
+  animation-delay: 0.14s;
 }
 
-@keyframes flareSweep {
+.soundwave-ring.echo {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 0 16px rgba(186, 230, 253, 0.2),
+    inset 0 0 15px rgba(255, 255, 255, 0.1);
+  animation-delay: 0.28s;
+}
+
+@keyframes soundwaveExpand {
   0% {
-    transform: translateY(-50%) scaleX(0);
-    opacity: 0;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%) scale(0.15);
+    opacity: 0.95;
   }
-  50% {
-    transform: translateY(-50%) scaleX(1);
-    opacity: 0.9;
+  40% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.35;
   }
   100% {
-    transform: translateY(-50%) scaleX(1.4);
+    width: min(1500px, 190vw);
+    height: min(1500px, 190vw);
+    transform: translate(-50%, -50%) scale(1.65);
     opacity: 0;
   }
 }
+
+/* Glass Awaken Radiant Aura */
+.glass-awaken-pulse {
+  box-shadow: 
+    0 30px 80px -15px rgba(0, 0, 0, 0.75),
+    0 0 55px rgba(255, 255, 255, 0.4),
+    0 0 95px rgba(186, 230, 253, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+  transition: box-shadow 1.4s ease !important;
+}
+
 
 
 
@@ -1647,7 +1704,7 @@ body.shimeji-select-ie {
   color: #ffffff;
   text-decoration: underline;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-  cursor: url('./assets/cursor/pointer.png'), pointer;
+  cursor: url('./assets/cursor/mao.png'), pointer;
 }
 
 :root {

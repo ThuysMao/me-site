@@ -12,7 +12,7 @@
   [![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
   <br />
-  <a href="https://profolio.blog/"><strong>➥ View Site</strong></a>
+  <a href="https://thuysmao.com/"><strong>➥ View Site</strong></a>
 </div>
 
 <br />

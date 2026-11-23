@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
   const introEl = document.getElementById('shinkai-intro');
-  const flareEl = document.getElementById('shinkai-flare');
   const skipBtn = document.getElementById('skip-button');
   const blurredBox = document.getElementById('blurred-box');
   const videoBackground = document.getElementById('myVideo');
@@ -75,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
   function playCinematicIntro() {
     introDone = false;
     if (introEl) introEl.classList.remove('done');
-    if (flareEl) flareEl.classList.remove('sweep');
 
     ['s-badge', 'sl-0', 'sl-1', 'sl-2', 'sl-3', 's-author'].forEach(id => {
       const el = document.getElementById(id);
@@ -92,29 +90,67 @@ document.addEventListener('DOMContentLoaded', function () {
     // Không tự động kết thúc: người dùng bắt buộc click chuột hoặc nhấn phím Space để vào
   }
 
-  // 3. ✨ Finish & Transition to Main Site
-  function finishIntro() {
+  // 3. 💧 Finish & Transition to Main Site (Realistic Water Ripple & Glass Awaken)
+  function finishIntro(originX, originY) {
     if (introDone) return;
     introDone = true;
     timers.forEach(t => clearTimeout(t));
-    if (rainAnimId) cancelAnimationFrame(rainAnimId);
 
-    // Anamorphic lens flare sweep
-    if (flareEl) flareEl.classList.add('sweep');
+    const posX = typeof originX === 'number' ? originX : window.innerWidth / 2;
+    const posY = typeof originY === 'number' ? originY : window.innerHeight / 2;
+
+    if (introEl) {
+      // Primary shockwave ring (Vòng gờ sóng chính)
+      const wave1 = document.createElement('div');
+      wave1.classList.add('soundwave-ring');
+      wave1.style.left = posX + 'px';
+      wave1.style.top = posY + 'px';
+      introEl.appendChild(wave1);
+
+      // Secondary harmonic ring (Gợn sóng thứ 2 sau 140ms)
+      setTimeout(() => {
+        const wave2 = document.createElement('div');
+        wave2.classList.add('soundwave-ring', 'harmonic');
+        wave2.style.left = posX + 'px';
+        wave2.style.top = posY + 'px';
+        introEl.appendChild(wave2);
+      }, 140);
+
+      // Tertiary echo ring (Gợn sóng phụ thứ 3 sau 280ms)
+      setTimeout(() => {
+        const wave3 = document.createElement('div');
+        wave3.classList.add('soundwave-ring', 'echo');
+        wave3.style.left = posX + 'px';
+        wave3.style.top = posY + 'px';
+        introEl.appendChild(wave3);
+      }, 280);
+    }
+
+    // Poem lines scatter outward as wave expands
+    const lines = document.querySelectorAll('.s-line');
+    lines.forEach((l, idx) => {
+      setTimeout(() => l?.classList.add('soundwave-disperse'), idx * 60);
+    });
 
     // Fade out skip button
     if (skipBtn) {
-      skipBtn.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      skipBtn.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       skipBtn.style.opacity = '0';
       skipBtn.style.transform = 'translateY(-4px)';
-      setTimeout(() => skipBtn.style.display = 'none', 350);
+      setTimeout(() => skipBtn.style.display = 'none', 400);
     }
 
-    // Exit animation for intro overlay & letterbox bars
+    // Immediately trigger smooth cinema curtain opening and intro fade-out (180ms delay)
     setTimeout(() => {
       if (introEl) introEl.classList.add('done');
       revealMainSite();
-    }, 250);
+    }, 180);
+
+    // After animation finishes, stop rain animation and unmount intro container from GPU
+    setTimeout(() => {
+      if (rainAnimId) cancelAnimationFrame(rainAnimId);
+      if (introEl) introEl.style.display = 'none';
+    }, 1600);
   }
 
   function revealMainSite() {
@@ -123,26 +159,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.body.classList.add(localStorage.getItem('site-theme') || 'dark-glass', 'allow-scroll');
 
-    // Smooth GPU emergence of Blurred Box Profile
+    // Smooth GPU emergence of Blurred Box Profile with Glass Awaken pulse
     if (blurredBox) {
       blurredBox.style.opacity = '0';
-      blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.96)';
-      blurredBox.style.filter = 'blur(6px)';
+      blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(0.95)';
       blurredBox.style.display = 'block';
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          blurredBox.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+          blurredBox.classList.add('glass-awaken-pulse');
+          blurredBox.style.transition = 'opacity 1.35s cubic-bezier(0.12, 0.8, 0.25, 1), transform 1.35s cubic-bezier(0.12, 0.8, 0.25, 1)';
           blurredBox.style.opacity = '1';
           blurredBox.style.transform = 'translate(-50%, -50%) perspective(1000px) scale(1)';
-          blurredBox.style.filter = 'blur(0px)';
           blurredBox.classList.add('theme-ready');
 
           setTimeout(() => {
+            blurredBox.classList.remove('glass-awaken-pulse');
             blurredBox.style.transition = '';
             blurredBox.style.transform = '';
-            blurredBox.style.filter = '';
-          }, 700);
+          }, 1450);
         });
       });
     }
@@ -219,19 +254,25 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateFooterClocks, 1000);
   }
 
-  // 🎮 Event Listeners for Skip / Awaken
-  if (skipBtn) skipBtn.addEventListener('click', finishIntro);
+  // 🎮 Event Listeners for Skip / Awaken (Passing coordinate for natural ripples)
+  if (skipBtn) {
+    skipBtn.addEventListener('click', (e) => {
+      finishIntro(e.clientX, e.clientY);
+    });
+  }
 
   if (introEl) {
     introEl.addEventListener('click', (e) => {
-      if (!e.target.closest('#skip-button')) finishIntro();
+      if (!e.target.closest('#skip-button')) {
+        finishIntro(e.clientX, e.clientY);
+      }
     });
   }
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'Enter' || e.code === 'Escape') {
       e.preventDefault();
-      finishIntro();
+      finishIntro(window.innerWidth / 2, window.innerHeight / 2);
     }
   });
 
